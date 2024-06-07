@@ -1,0 +1,36 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "api-query-params": "5.4.0",
+    "bcrypt": "^5.1.1",
+    "canvas": "^2.11.2",
+    "dotenv": "16.0.3",
+    "ejs": "^3.1.10",
+    "express": "4.19.2",
+    "express-fileupload": "1.4.0",
+    "express-session": "^1.18.0",
+    "face-api.js": "^0.22.2",
+    "joi": "17.7.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^4.17.2",
+    "mongoose": "^6.12.8",
+    "mongoose-delete": "0.5.4",
+    "mysql2": "3.9.7"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "nodemon": "^3.1.0",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "vite": "^5.2.7"
+  }
+}

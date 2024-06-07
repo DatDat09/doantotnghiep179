@@ -1,0 +1,83 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HomePage</title>
+  <link href="/css/styles2.css" rel="stylesheet">
+</head>
+
+<!-- <style>
+  .table-container {
+    padding: 15px 20px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .title {
+    font-size: 25px;
+    font-weight: 600;
+    padding-bottom: 10px;
+  }
+
+  th,
+  td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  tr:hover {
+    background-color: #ccc;
+  }
+</style> -->
+
+<body>
+  <div class="topnav">
+    <a class="active" href="/">Home</a>
+    <a href="/create">Create User</a>
+  </div>
+  <div class="table-container">
+
+    <!-- <%= JSON.stringify(listUsers) %> -->
+    <div class="title">List Users</div>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Name</th>
+        <th>City</th>
+        <th>Action</th>
+      </tr>
+
+      <% listUsers.forEach(function(user){ %>
+        <tr>
+          <td>
+            <%= user.id %>
+          </td>
+          <td>
+            <%= user.email %>
+          </td>
+          <td>
+            <%= user.name %>
+          </td>
+          <td>
+            <%= user.city %>
+          </td>
+          <td>
+            <a href="/update/<%= user.id %>">Edit</a>
+
+            <form action="/delete-user/<%= user.id %>" method=" POST">
+              <button>Delete</button>
+            </form>
+          </td>
+        </tr>
+        <% }); %>
+    </table>
+  </div>
+</body>
+
+</html>

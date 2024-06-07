@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="../assets/css/styles.css" rel="stylesheet" />
+</head>
+
+    <title>Admin Panel</title>
+
+</head>
+<body class="bg-blue-600">
+<!--
+
+      <li class="mt-0.5 w-full group">
+        <a href="" class="py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 transition-colors hover:bg-blue-200 hover:text-slate-700 sidebar-dropdown-toggle">
+          <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90"></i>
+
+          <div class="icon-container mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+            <i id="icon" class="relative top-0 text-sm leading-normal text-blue-500 ni ni-tv-2" ></i>
+          </div>
+          <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Quản lý sinh viên</span>
+          <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90"></i>
+        </a>
+        <div  class="pl-7 mt-2 group-[.selected]:block">
+          <div class="w-full">
+            <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 " href="./index.html">
+              <span class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none"> A </span>
+              <span class="transition-all duration-100 pointer-events-none ease">Khoa</span>
+            </a>
+          </div>
+          <div class="w-full">
+            <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 " href="./pages/student_management.html">
+              <span class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none"> L </span>
+
+              <span class="transition-all duration-100 pointer-events-none ease">Quản lý sinh viên</span>
+            </a>
+          </div>
+
+          <div class="w-full">
+
+            <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 " href="./pages/lecturer_management.html">
+
+              <span class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none"> D </span>
+
+              <span class="transition-all duration-100 pointer-events-none ease">Quản lý giảng viên</span>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <script>
+        document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function (item) {
+          item.addEventListener('click', function (e) {
+            e.preventDefault()
+            const parent = item.closest('.group')
+            if (parent.classList.contains('selected')) {
+              parent.classList.remove('selected')
+            } else {
+              document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function (i) {
+                i.closest('.group').classList.remove('selected')
+              })
+              parent.classList.add('selected')
+            }
+          })
+        })
+      </script>
+-->
+
+
+
+<!--
+<div class="min-h-screen flex items-center justify-center">
+    <div class="relative group" x-data="{ open: true }">
+        <button @click="open = !open" id="dropdown-button" class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+            <span class="mr-2">Open Dropdown</span>
+            <span class="ml-auto">
+                          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path x-show="! open" d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"></path>
+                            <path x-show="open" d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                          </svg>
+                        </span>
+
+        </button>
+        <div id="dropdown-menu" class="hidden absolute right-0 mt-2 rounded-1.4 shadow-lg bg-white p-2 ">
+            <input value="Kinh" type="text" name="username"
+                   class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md">Uppercase</a>
+            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md">Lowercase</a>
+            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md">Camel Case</a>
+            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md">Kebab Case</a>
+        </div>
+    </div>
+</div>
+<script src="../assets/js/alpine.js" async></script>
+<script>
+    // JavaScript to toggle the dropdown
+    const dropdownButton = document.getElementById('dropdown-button');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    const searchInput = document.getElementById('search-input');
+    let isOpen = false; // Set to true to open the dropdown by default
+
+    // Function to toggle the dropdown state
+    function toggleDropdown() {
+        isOpen = !isOpen;
+        dropdownMenu.classList.toggle('hidden', !isOpen);
+    }
+
+    // Set initial state
+    toggleDropdown();
+
+    dropdownButton.addEventListener('click', () => {
+        toggleDropdown();
+    });
+
+    // Add event listener to filter items based on input
+    searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const items = dropdownMenu.querySelectorAll('a');
+
+        items.forEach((item) => {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(searchTerm)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+</script>
+component -->
+
+<div class="relative">
+    <button dropdown-trigger aria-expanded="false" type="button" class="inline-block px-6 py-3 mr-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-tl from-blue-500 to-violet-500 leading-normal text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25 hover:-translate-y-px active:opacity-85 hover:shadow-md">Dropdown</button>
+    <p class="hidden transform-dropdown-show"></p>
+    <ul dropdown-menu class="z-10 text-sm lg:shadow-3xl duration-250 before:duration-350 before:font-awesome before:ease min-w-44 before:text-5.5 transform-dropdown pointer-events-none absolute left-auto top-1/2 m-0 -mr-4 mt-2 list-none rounded-lg border-0 border-solid border-transparent bg-white bg-clip-padding px-0 py-2 text-left text-slate-500 opacity-0 transition-all before:absolute before:right-7 before:left-auto before:top-0 before:z-40 before:text-white before:transition-all before:content-['\f0d8']">
+        <li>
+            <a class="py-1.2 lg:ease clear-both block w-full whitespace-nowrap border-0 bg-transparent px-4 text-left font-normal text-slate-500 hover:bg-gray-200 hover:text-slate-700 dark:text-white dark:hover:bg-gray-200/80 dark:hover:text-slate-700 lg:transition-colors lg:duration-300" href="javascript:;">Action</a>
+        </li>
+        <li>
+            <a class="py-1.2 lg:ease clear-both block w-full whitespace-nowrap border-0 bg-transparent px-4 text-left font-normal text-slate-500 hover:bg-gray-200 hover:text-slate-700 dark:text-white dark:hover:bg-gray-200/80 dark:hover:text-slate-700 lg:transition-colors lg:duration-300" href="javascript:;">Another action</a>
+        </li>
+        <li>
+            <a class="py-1.2 lg:ease clear-both block w-full whitespace-nowrap border-0 bg-transparent px-4 text-left font-normal text-slate-500 hover:bg-gray-200 hover:text-slate-700 dark:text-white dark:hover:bg-gray-200/80 dark:hover:text-slate-700 lg:transition-colors lg:duration-300" href="javascript:;">Something else here</a>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

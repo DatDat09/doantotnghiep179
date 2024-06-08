@@ -160,5 +160,59 @@ module.exports = {
       res.status(500).json({ message: 'Internal Server Error' });
     }
   },
+  createSchedule: async (req, res) => {
+    try {
+      const classes = await Class.find({ processed: false }).sort({ malop: 1 }); // Lấy ra các lớp chưa được xử lý
+      const days = ['Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu']; // Các ngày trong tuần từ Thứ Hai đến Thứ Sáu
+      let startHour = 6; // Giờ bắt đầu từ 6:45 sáng
+      let endHour = 20; // Giờ kết thúc là 20:00 tối
+      const maxDurationPerDay = 3; // Thời gian tối đa cho mỗi môn học trong một ngày (tính bằng giờ)
+
+      let currentDayIndex = 0; // Index của ngày hiện tại (bắt đầu từ Thứ Hai)
+
+      for (let cls of classes) {
+        const duration = calculateDuration(cls); // Tính thời gian mỗi lớp học
+
+        if (startHour + duration <= endHour && duration <= maxDurationPerDay) { // Kiểm tra xem lớp học có thể kết thúc trước 20:00 và không vượt quá thời gian tối đa trên mỗi ngày không
+          cls.startTime = formatTime(startHour); // Format thời gian bắt đầu
+          cls.endTime = formatTime(startHour + duration); // Format thời gian kết thúc
+          cls.thu = days[currentDayIndex]; // Gán ngày học
+
+          // Cập nhật thời gian cho ngày tiếp theo
+          startHour += duration;
+        } else { // Nếu không thể, chuyển sang ngày học tiếp theo
+          startHour = 6; // Reset giờ bắt đầu cho ngày mới
+          currentDayIndex++;
+          cls.startTime = formatTime(startHour); // Format thời gian bắt đầu
+          cls.endTime = formatTime(startHour + duration); // Format thời gian kết thúc
+          cls.thu = days[currentDayIndex]; // Gán ngày học
+
+          // Cập nhật thời gian cho ngày tiếp theo
+          startHour += duration;
+        }
+
+        cls.processed = true; // Đánh dấu lớp đã được xử lý
+        await cls.save();
+      }
+
+      res.send('Lịch học đã được tạo thành công.');
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  },
+}
+function calculateDuration(cls) {
+  // Tính độ dài của lớp học, có thể tính dựa trên số lượng học viên hoặc cách khác
+  // Đây là một ví dụ đơn giản, bạn có thể điều chỉnh theo yêu cầu cụ thể
+  const baseDuration = 2; // Mỗi lớp học mặc định kéo dài 2 tiếng
+  const additionalTimePerStudent = 0.5; // Thời gian thêm cho mỗi học viên, ví dụ 0.5 tiếng
+
+  const additionalTime = cls.idStudents.length * additionalTimePerStudent;
+  return baseDuration + additionalTime;
 }
 
+function formatTime(hour) {
+  const hourPart = Math.floor(hour);
+  const minutePart = hour % 1 === 0.5 ? '30' : '00'; // Nếu phần phút là 0.5, sử dụng '30', nếu không, sử dụng '00'
+  return `${hourPart}:${minutePart}`;
+}

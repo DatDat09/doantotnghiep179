@@ -16,6 +16,7 @@ const classExam = require("../models/classExam")
 
 
 module.exports = {
+
   getStudentAPI: async (req, res) => {
     let results = await CTDT.find({});
     return res.render('build/pages/student_management', { listCTDT: results })

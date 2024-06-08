@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
   description: Array,
 });
 
+
 userSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
 
 userSchema.pre('save', async function (next) {

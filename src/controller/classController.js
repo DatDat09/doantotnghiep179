@@ -92,19 +92,72 @@ module.exports = {
 
       // Tạo danh sách sinh viên duy nhất và đánh dấu trạng thái
       let uniqueStudents = new Map();
-
       classData.idStudents.forEach(student => {
         uniqueStudents.set(student._id.toString(), { ...student._doc, inClass: true, attended: false });
       });
 
+      const results = await User.find({ role: 'student' });
 
+      // Đánh dấu trạng thái sinh viên đã có trong lớp
+      results.forEach(user => {
+        if (uniqueStudents.has(user._id.toString())) {
+          user.inClass = true;
+        } else {
+          user.inClass = false;
+        }
+      });
 
       return res.render('build/pages/listStudentAD.ejs', {
-        listStudentByClass: Array.from(uniqueStudents.values())
+        listStudentByClass: Array.from(uniqueStudents.values()),
+        listUserByCTDT: results,
+        classId: idClass // Pass classId to the template
       });
     } catch (error) {
-      console.error("Error fetching class  data:", error);
+      console.error("Error fetching class data:", error);
       return res.status(500).send("Internal Server Error");
+    }
+  },
+  addStudentToClass: async (req, res) => {
+    try {
+      const { classId, studentId } = req.params;
+      let classData = await Class.findById(classId);
+
+      if (!classData) {
+        return res.status(404).send("Class not found");
+      }
+
+      if (!classData.idStudents.includes(studentId)) {
+        classData.idStudents.push(studentId);
+        await classData.save();
+      }
+
+      res.status(200).send("Student added to class");
+    } catch (error) {
+      console.error("Error adding student to class:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+
+
+
+  deleteStudentFromClass: async (req, res) => {
+    const { classId, studentId } = req.params;
+
+    try {
+      const updatedClass = await Class.findByIdAndUpdate(
+        classId,
+        { $pull: { idStudents: studentId } },
+        { new: true }
+      );
+
+      if (!updatedClass) {
+        return res.status(404).json({ message: 'Class not found' });
+      }
+
+      res.status(200).json({ message: 'Student removed from class', updatedClass });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal Server Error' });
     }
   },
 }

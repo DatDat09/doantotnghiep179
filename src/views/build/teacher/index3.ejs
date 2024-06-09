@@ -4,41 +4,46 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Danh sách sinh viên điểm danh</title>
-    <link rel="apple-touch-icon" sizes="76x76" href="../img/apple-icon.png" />
-    <link rel="icon" type="image/png" href="../img/favicon.png" />
+    <title>Trang chủ</title>
+    <link rel="apple-touch-icon" sizes="76x76" href="./img/apple-icon.png" />
+    <link rel="icon" type="image/png" href="./img/favicon.png" />
     <!--     Fonts and icons     -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" />
     <!-- Nucleo Icons -->
-    <link href="../css/nucleo-icons.css" rel="stylesheet" />
-    <link href="../css/nucleo-svg.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/nucleo-icons.css" />
+    <link rel="stylesheet" href="./css/nucleo-svg.css" />
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Popper -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
+
+
     <!-- Main Styling -->
-
-    <link href="../css/styles.css" rel="stylesheet" />
-    <link href="../css/My_styles.css" rel="stylesheet" />
-
+    <link href="./css/styles.css" rel="stylesheet" />
+    <link href="./css/My_styles.css" rel="stylesheet" />
 </head>
 
 <body
     class="m-0 font-sans text-base antialiased font-normal dark:bg-slate-900 leading-default bg-gray-50 text-slate-500">
+
     <div class="absolute w-full bg-blue-500 dark:hidden min-h-75"></div>
     <!-- sidenav  -->
+
     <aside
-        class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-4 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-30 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
+        class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-4 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
         aria-expanded="false">
         <div class="h-19">
             <i
                 class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"></i>
-            <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700" href="/mainStudent">
-                <img src="../img/logo-ct-dark.png"
+            <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
+                href="./mainTeacher">
+                <img src="./img/logo-ct-dark.png"
                     class="inline h-full max-w-full transition-all duration-200 dark:hidden ease-nav-brand max-h-8"
                     alt="main_logo" />
-                <img src="../img/logo-ct.png"
+                <img src="./img/logo-ct.png"
                     class="hidden h-full max-w-full transition-all duration-200 dark:inline ease-nav-brand max-h-8"
                     alt="main_logo" />
                 <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Hệ thống quản lý đào
@@ -46,15 +51,14 @@
             </a>
         </div>
 
-
         <hr
             class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
 
         <div class="items-center block w-auto max-h-screen overflow-auto grow basis-full">
             <ul class="flex flex-col pl-0 mb-0">
                 <li class="mt-0.5 w-full">
-                    <a class="py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 transition-colors hover:bg-blue-200 hover:text-slate-700"
-                        href="/mainStudent">
+                    <a class="py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 transition-colors hover:bg-blue-200 hover:text-slate-700"
+                        href="./mainTeacher">
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                             <i class="text-sm leading-normal text-blue-500 ni ni-shop"></i>
@@ -65,14 +69,15 @@
 
                 <!---->
                 <li class="mt-0.5 w-full">
-                    <div x-data="{ open: true }">
+                    <div x-data="{ open: false }">
                         <a @click="open = !open"
-                            class="bg-blue-500/13 font-semibold text-slate-800 py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 transition-colors hover:bg-blue-200 hover:text-slate-700">
+                            class="py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 transition-colors hover:bg-blue-200 hover:text-slate-700">
                             <div
                                 class="icon-container mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                                 <i class="relative top-0 text-sm leading-normal text-blue-500 ni ni-tv-2"></i>
                             </div>
                             <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Dữ liệu hệ thống</span>
+
 
                             <span class="ml-auto">
                                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -84,23 +89,24 @@
                             </span>
                         </a>
                         <div x-show="open" class="pl-7 mt-2">
-
                             <div class="w-full">
-
                                 <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 "
-                                    href="/coursesStudent">
+                                    href="/coursesTeacher">
 
                                     <span
                                         class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none">
-                                        D </span>
+                                        D
+                                    </span>
 
                                     <span class="transition-all duration-100 pointer-events-none ease">Quản lý học
                                         phần</span>
                                 </a>
                             </div>
+
+
                             <div class="w-full">
                                 <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 "
-                                    href="/classStudent">
+                                    href="/classTeacher">
 
                                     <span
                                         class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none">
@@ -113,8 +119,8 @@
                             </div>
 
                             <div class="w-full">
-                                <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap rounded-lg bg-transparent pr-4 font-semibold text-slate-800 shadow-none transition-colors  dark:text-white dark:opacity-100 "
-                                    href="/classExamsStudent">
+                                <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 "
+                                    href="/classExamsTeacher">
 
                                     <span
                                         class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none">
@@ -126,11 +132,10 @@
                                 </a>
                             </div>
 
-
                         </div>
                     </div>
                 </li>
-                <script src="../js/alpine.js" async></script>
+                <script src="./js/alpine.js" async></script>
 
 
 
@@ -141,7 +146,7 @@
                 </li>
                 <li class="mt-0.5 w-full">
                     <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="/listClassStudent">
+                        href="/listClassTeacher">
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                             <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-calendar-grid-58"></i>
@@ -160,6 +165,28 @@
                         <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Profile</span>
                     </a>
                 </li>
+
+                <!-- <li class="mt-0.5 w-full">
+          <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+            href="/login">
+            <div
+              class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+              <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-single-copy-04"></i>
+            </div>
+            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Sign In</span>
+          </a>
+        </li> -->
+
+                <!-- <li class="mt-0.5 w-full">
+          <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+            href="./pages/sign-up.html">
+            <div
+              class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+              <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-collection"></i>
+            </div>
+            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Sign Up</span>
+          </a>
+        </li> -->
             </ul>
         </div>
     </aside>
@@ -175,14 +202,13 @@
                     <!-- breadcrumb -->
                     <ol class="flex flex-wrap pt-1 mr-12 bg-transparent rounded-lg sm:mr-16">
                         <li class="text-sm leading-normal">
-                            <a class="text-white opacity-50" href="javascript:;">Main</a>
+                            <a class="text-white opacity-50" href="javascript:;">Pages</a>
                         </li>
                         <li class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
-                            aria-current="page">ClassExams</li>
-                        <li class="text-sm pl-2 capitalize leading-normal text-white before:float-left before:pr-2 before:text-white before:content-['/']"
-                            aria-current="page">List Students</li>
+                            aria-current="page">
+                            Học tập</li>
                     </ol>
-                    <h6 class="mb-0 font-bold text-white capitalize">List Students</h6>
+                    <h6 class="mb-0 font-bold text-white capitalize">Học tập</h6>
                 </nav>
 
                 <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
@@ -198,10 +224,6 @@
                         </div>
                     </div>
                     <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
-                        <!-- online builder btn  -->
-                        <!-- <li class="flex items-center">
-                      <a class="inline-block px-8 py-2 mb-0 mr-4 text-xs font-bold text-center text-blue-500 uppercase align-middle transition-all ease-in bg-transparent border border-blue-500 border-solid rounded-lg shadow-none cursor-pointer leading-pro hover:-translate-y-px active:shadow-xs hover:border-blue-500 active:bg-blue-500 active:hover:text-blue-500 hover:text-blue-500 tracking-tight-rem hover:bg-transparent hover:opacity-75 hover:shadow-none active:text-white active:hover:bg-transparent" target="_blank" href="https://www.creative-tim.com/builder/soft-ui?ref=navbar-dashboard&amp;_ga=2.76518741.1192788655.1647724933-1242940210.1644448053">Online Builder</a>
-                    </li> -->
                         <li class="flex items-center">
                             <a href="/" id="logoutLink"
                                 class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand">
@@ -264,7 +286,7 @@
                                         href="javascript:;">
                                         <div class="flex py-1">
                                             <div class="my-auto">
-                                                <img src="../img/team-2.jpg"
+                                                <img src="./img/team-2.jpg"
                                                     class="inline-flex items-center justify-center mr-4 text-sm text-white h-9 w-9 max-w-none rounded-xl" />
                                             </div>
                                             <div class="flex flex-col justify-center">
@@ -285,7 +307,7 @@
                                         href="javascript:;">
                                         <div class="flex py-1">
                                             <div class="my-auto">
-                                                <img src="../img/small-logos/logo-spotify.svg"
+                                                <img src="./img/small-logos/logo-spotify.svg"
                                                     class="inline-flex items-center justify-center mr-4 text-sm text-white bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 h-9 w-9 max-w-none rounded-xl" />
                                             </div>
                                             <div class="flex flex-col justify-center">
@@ -330,7 +352,8 @@
                                             </div>
                                             <div class="flex flex-col justify-center">
                                                 <h6 class="mb-1 text-sm font-normal leading-normal dark:text-white">
-                                                    Payment successfully completed</h6>
+                                                    Payment successfully
+                                                    completed</h6>
                                                 <p class="mb-0 text-xs leading-tight text-slate-400 dark:text-white/80">
                                                     <i class="mr-1 fa fa-clock"></i>
                                                     2 days
@@ -345,127 +368,33 @@
                 </div>
             </div>
         </nav>
+        <!-- end Navbar -->
+
+
+
+
         <!-- cards -->
         <div class="w-full px-6 py-6 mx-auto">
             <div class="flex flex-wrap -mx-3">
                 <div class="flex-none w-full max-w-full px-3">
                     <div
-                        class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
-                        <div
-                            class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent flex items-center justify-between">
-                            <h6 class="dark:text-white">Danh sách sinh viên</h6>
+                        class="relative flex flex-col min-w-0 mb-6 break-words bg-gray-200 border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+                        <div class="p-6 pb-0 mb-0 border-b-0 border-b-solid rounded-t-2xl border-b-transparent">
+                            <h6 class="dark:text-white">
+                                Welcome
+                            </h6>
+                            <p>
+                                <%= user.name %>
+                            </p>
 
                         </div>
-
-
-
-
-
-                        <div class="flex flex-wrap">
-                            <div class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
-                                <input type="text" placeholder="Tìm mã sinh viên"
-                                    class="focus:shadow-primary-outline text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"></input>
-                            </div>
-                            <div class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
-                                <!-- Nội dung cột 2 -->
-                                <input type="text" placeholder="Tìm tên sinh viên"
-                                    class="focus:shadow-primary-outline text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"></input>
-                            </div>
-                            <div class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
-                                <div class="flex flex-row">
-                                    <button type="button"
-                                        class="inline-flex items-center px-2 py-2.5 mr-4 font-bold text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-tl from-blue-500 to-violet-500 leading-normal text-xs ease-in tracking-tight-rem shadow-xs bg-150 bg-x-25 hover:-translate-y-px active:opacity-85 hover:shadow-md">
-                                        <img src="../img/ic/ic_search.svg" class="w-5 h-5 text-white" alt="Icon">
-                                        <span>Tìm kiếm</span>
-                                    </button>
-                                    <button type="button"
-                                        class="inline-flex items-center px-2 py-2.5 font-bold text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-tl from-red-600 to-orange-600 leading-normal text-xs ease-in tracking-tight-rem shadow-xs bg-150 bg-x-25 hover:-translate-y-px active:opacity-85 hover:shadow-md">
-                                        <img src="../img/ic/ic_search.svg" class="w-5 h-5 text-white" alt="Icon">
-                                        <span>Reset</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="flex-auto px-0 pt-0 pb-2">
-                            <div class="p-0 overflow-x-auto">
-                                <table
-                                    class="items-center justify-center w-full mb-0 align-top border-collapse dark:border-white/40 text-slate-500">
-                                    <thead class="align-bottom">
-                                        <tr>
-                                            <th
-                                                class="px-5 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                                STT</th>
-                                            <th
-                                                class="px-6 py-3  font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                                Mã SV</th>
-                                            <th
-                                                class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                                Họ và tên</th>
-                                            <th
-                                                class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
-                                                Email</th>
-
-                                    </thead>
-                                    <tbody>
-                                        <% let counter=1; listStudentByClassExam.forEach(function(user){ %>
-                                            <tr>
-                                                <td
-                                                    class="px-6 py-3 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                    <h6
-                                                        class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-80">
-                                                        <%= counter %>
-                                                    </h6>
-                                                </td>
-                                                <td
-                                                    class="p-2 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                    <div class="flex px-2 py-1">
-                                                        <div class="flex flex-col justify-center">
-                                                            <h6 class="mb-0 text-sm leading-normal dark:text-white">
-                                                                <%= user.mssv %>
-                                                            </h6>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td
-                                                    class="p-2 pr-6 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                    <h6
-                                                        class="mb-0 text-xs font-bold leading-tight dark:text-white dark:opacity-80">
-                                                        <%= user.name %>
-                                                    </h6>
-                                                </td>
-                                                <td
-                                                    class="p-2 pr-6 align-middle bg-transparent border-b dark:border-white/40 whitespace-nowrap shadow-transparent">
-                                                    <h6
-                                                        class="mb-0 text-xs font-bold leading-tight dark:text-white dark:opacity-80">
-                                                        <%= user.username %>
-                                                    </h6>
-                                                </td>
-
-                                            </tr>
-                                            <% counter++; }); %>
-                                    </tbody>
-
-                                </table>
-
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- end cards -->
-
     </main>
-
-    <!-- -->
-
-
-    <!-- -->
-
-
-
     <div fixed-plugin>
         <a fixed-plugin-button
             class="fixed px-4 py-2 text-xl bg-white shadow-lg cursor-pointer bottom-8 right-8 z-990 rounded-circle text-slate-700">
@@ -520,7 +449,8 @@
                 <div class="mt-4">
                     <h6 class="mb-0 dark:text-white">Sidenav Type</h6>
                     <p class="text-sm leading-normal dark:text-white dark:opacity-80">Choose between 2 different sidenav
-                        types.</p>
+                        types.
+                    </p>
                 </div>
                 <div class="flex">
                     <button transparent-style-btn
@@ -531,7 +461,8 @@
                         data-class="bg-white">Dark</button>
                 </div>
                 <p class="block mt-2 text-sm leading-normal dark:text-white dark:opacity-80 xl:hidden">You can change
-                    the sidenav type just on desktop view.</p>
+                    the
+                    sidenav type just on desktop view.</p>
                 <!-- Navbar Fixed -->
                 <div class="flex my-4">
                     <h6 class="mb-0 dark:text-white">Navbar Fixed</h6>
@@ -574,20 +505,11 @@
         </div>
     </div>
 </body>
-<!-- Modal -->
-
 <!-- plugin for charts  -->
-<script src="../js/plugins/chartjs.min.js" async></script>
+<script src="./js/plugins/chartjs.min.js" async></script>
 <!-- plugin for scrollbar  -->
-<script src="../js/plugins/perfect-scrollbar.min.js" async></script>
+<script src="./js/plugins/perfect-scrollbar.min.js" async></script>
 <!-- main script file  -->
-<script src="../js/argon-dashboard-tailwind.js?v=1.0.1" async></script>
-<!-- Các phần khác của trang HTML -->
-
-<!-- Thêm JavaScript vào cuối trang HTML -->
-
-</body>
-
-</html>
+<script src="./js/argon-dashboard-tailwind.js?v=1.0.1" async></script>
 
 </html>

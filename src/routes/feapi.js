@@ -14,6 +14,9 @@ const { getClassExams, searchClassExamsByName, getStudentByClassExam, postClassE
     = require('../controller/classExamController')
 const { loginUser, getMain, Login, Logout, getProfile, } = require('../controller/mainController')
 const { getMainStudent, getCourseStudent, getClassbyCourseStudent, getClassStudent, getClassExamsS, searchClassExamsByNameS, getStudentByClassExamS, putClassStudent, getStudentinClassStudent } = require('../controller/studentController')
+const { getMainTeacher, getCourseTeacher, getClassbyCourseTeacher, getClassTeacher, getClassExamsT, searchClassExamsByNameT, getTeacherByClassExamS, putClassTeacher, getTeacherinClassTeacher } = require('../controller/teacherController')
+
+
 
 const { }
     = require('../controller/kqhtController')
@@ -29,6 +32,19 @@ routerAPI.put('/classStudentRegister', middleware.verifyToken, putClassStudent)
 routerAPI.get('/classExamsStudent', middleware.verifyToken, getClassExamsS)
 routerAPI.post('/classExamsS/search', middleware.verifyToken, searchClassExamsByNameS);
 routerAPI.get('/classExamsStudentsS/:idClassExam', middleware.verifyToken, getStudentByClassExamS);
+
+
+//TEACHER
+routerAPI.get('/mainTeacher', middleware.verifyToken, middleware.roleTeacher, getMainTeacher) //Trang dành cho teacher
+routerAPI.get('/coursesTeacher', middleware.verifyToken, middleware.roleTeacher, getCourseTeacher) //View course
+routerAPI.get('/coursesTeacher/:idCourse', middleware.verifyToken, middleware.roleTeacher, getClassbyCourseTeacher)
+routerAPI.get('/classTeacher', middleware.verifyToken, getClassTeacher)
+routerAPI.get('/classTeacher/:idClass', middleware.verifyToken, getTeacherinClassTeacher)
+routerAPI.put('/classTeacherRegister', middleware.verifyToken, putClassTeacher)
+routerAPI.get('/classExamsTeacher', middleware.verifyToken, getClassExamsT)
+routerAPI.post('/classExamsT/search', middleware.verifyToken, searchClassExamsByNameT);
+routerAPI.get('/classExamsTeacherS/:idClassExam', middleware.verifyToken, getTeacherByClassExamS);
+
 
 
 ///ADMIN

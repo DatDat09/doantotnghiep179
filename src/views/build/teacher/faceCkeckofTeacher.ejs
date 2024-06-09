@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Face Recognition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"],
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #218838;
+        }
+
+        video,
+        canvas,
+        img {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .controls {
+            margin-top: 10px;
+        }
+
+        .spinner {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .back-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-button i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="notifications"></div>
+    <div class="container">
+        <h1>Face Recognition System</h1>
+        <button class="back-button" onclick="window.location.href='/classExamsTeacher'"><i
+                class="fas fa-arrow-left"></i></button>
+
+        <!-- Form for uploading image -->
+        <form id="uploadForm" action="/check-face/<%=idClassExam%>" method="POST" encType="multipart/form-data">
+            <input type="file" id="fileInput" name="File1" />
+            <input type="submit" value="Upload Image" />
+        </form>
+        <!-- Video and Canvas elements -->
+        <video id="video" width="320" height="240" autoplay></video>
+        <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+        <!-- Image element to display captured photo -->
+        <img id="photo" width="320" height="240">
+        <!-- Controls buttons -->
+        <div class="controls">
+            <button id="toggleCamera">Turn On Camera</button>
+            <button id="capture">Capture</button>
+            <button id="retake" style="display: none;">Retake</button>
+        </div>
+        <!-- Spinner element -->
+        <div id="spinner" class="spinner"></div>
+        <!-- Result section to display recognized person -->
+        <div id="resultSection" style="display: none;">
+            <p id="recognizedPerson"></p>
+            <p id="recognizedDistance"></p>
+        </div>
+    </div>
+
+    <!-- add face for training -->
+    <!-- <div class="form-section">
+        <h2>Add Face for Training</h2>
+        <form action="/post-face" method="post" encType="multipart/form-data">
+            <input type="text" name="label" placeholder="Label" required />
+            <input type="file" name="File1" required />
+            <input type="submit" value="Add Face" />
+        </form>
+    </div> -->
+    </div>
+    <!-- JavaScript code -->
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const photo = document.getElementById('photo');
+        const captureButton = document.getElementById('capture');
+        const retakeButton = document.getElementById('retake');
+        const fileInput = document.getElementById('fileInput');
+        const uploadForm = document.getElementById('uploadForm');
+        const toggleCameraButton = document.getElementById('toggleCamera');
+        const spinner = document.getElementById('spinner');
+
+        let stream = null;
+
+        async function startCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                toggleCameraButton.textContent = "Turn Off Camera";
+                video.style.display = 'block';
+            } catch (err) {
+                console.error("Error accessing the camera: " + err);
+            }
+        }
+
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+                stream = null;
+                toggleCameraButton.textContent = "Turn On Camera";
+            }
+        }
+
+        // Capture a photo
+        captureButton.addEventListener('click', () => {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            photo.src = canvas.toDataURL('image/jpeg');
+            video.style.display = 'none';
+            canvas.style.display = 'none';
+            photo.style.display = 'block';
+            captureButton.style.display = 'none';
+            retakeButton.style.display = 'inline-block';
+
+            // Create a file from the captured image and add it to the file input
+            canvas.toBlob(blob => {
+                const capturedFile = new File([blob], "captured_image.jpeg", { type: "image/jpeg" });
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(capturedFile);
+                fileInput.files = dataTransfer.files;
+            });
+        });
+
+        // Retake photo
+        retakeButton.addEventListener('click', () => {
+            video.style.display = 'block';
+            canvas.style.display = 'none';
+            photo.style.display = 'none';
+            captureButton.style.display = 'inline-block';
+            retakeButton.style.display = 'none';
+        });
+
+        // Toggle camera
+        toggleCameraButton.addEventListener('click', () => {
+            if (stream) {
+                stopCamera();
+            } else {
+                startCamera();
+            }
+        });
+
+        // Process the form submission
+        uploadForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            // Show spinner
+            spinner.style.display = 'block';
+
+            // Get the form data
+            const formData = new FormData(uploadForm);
+
+
+            // Send the form data to the server using fetch API
+            try {
+                const response = await fetch("/check-face/<%=idClassExam%>", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    // Update the recognized person information
+                    // if (data.result[0]._label == 'unknown') {
+                    // noPersonRecognizedPerson(result)
+                    // }
+                    // else{
+                    updateRecognizedPerson(data.result);
+                    // }
+                } else {
+                    console.error("Error:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+
+            // Hide spinner
+            spinner.style.display = 'none';
+        });
+        async function noPersonRecognizedPerson(result) {
+            const resultSection = document.getElementById('resultSection');
+            const recognizedPerson = document.getElementById('recognizedPerson');
+            const recognizedDistance = document.getElementById('recognizedDistance');
+
+
+            recognizedPerson.textContent = "No person recognized.";
+            recognizedDistance.textContent = "";
+            resultSection.style.display = 'block';
+            // Check if result is not empty
+            // if (result && result.length > 0) {
+            //     const recognizedUserId = result[0]._label;
+
+            //     try {
+            //         // Fetch user name based on recognizedUserId from the server
+            //         const response = await fetch(`/get-recognized-name/${recognizedUserId}`);
+            //         if (response.ok) {
+            //             const data = await response.json();
+            //             const recognizedName = data.name;
+            //             const recognizedDist = result[0]._distance;
+            //             recognizedPerson.textContent = `Điểm danh thành công: ${recognizedName}`;
+            //             recognizedDistance.textContent = `Recognized distance: ${recognizedDist}`;
+            //             resultSection.style.display = 'block';
+            //         } else {
+            //             console.error("Error:", response.statusText);
+            //         }
+            //     } catch (error) {
+            //         console.error("Error:", error);
+            //     }
+            // } else {
+            //     recognizedPerson.textContent = "No person recognized.";
+            //     recognizedDistance.textContent = "";
+            //     resultSection.style.display = 'block';
+            // }
+        }
+        // Function to update recognized person information
+        // Function to update recognized person information
+        async function updateRecognizedPerson(result) {
+            const resultSection = document.getElementById('resultSection');
+            const recognizedPerson = document.getElementById('recognizedPerson');
+            const recognizedDistance = document.getElementById('recognizedDistance');
+
+            if (result[0]._label == 'unknown') {
+                recognizedPerson.textContent = "Không nhận diện được sinh viên";
+                recognizedDistance.textContent = '';
+                resultSection.style.display = 'block';
+            }
+            // Check if result is not empty
+            else if (result && result.length > 0) {
+                const recognizedUserId = result[0]._label;
+
+                try {
+                    // Fetch user name based on recognizedUserId from the server
+                    const response = await fetch(`/get-recognized-name/${recognizedUserId}`);
+                    if (response.ok) {
+                        const data = await response.json();
+                        const recognizedName = data.name;
+                        const recognizedDist = result[0]._distance;
+                        recognizedPerson.textContent = `Điểm danh thành công: ${recognizedName}`;
+                        recognizedDistance.textContent = `Recognized distance: ${recognizedDist}`;
+                        resultSection.style.display = 'block';
+                    } else {
+                        console.error("Error:", response.statusText);
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+            } else {
+                recognizedPerson.textContent = "No person recognized.";
+                recognizedDistance.textContent = "";
+                resultSection.style.display = 'block';
+            }
+        }
+
+
+        // Initial camera state
+        stopCamera();
+    </script>
+
+</body>
+
+</html>

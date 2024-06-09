@@ -163,4 +163,15 @@ exports.getFaceByName = async (req, res) => {
     console.error("Error in fetching recognized name:", error.message);
     res.status(500).json({ message: "Internal server error" });
   }
+};
+exports.renderForm1 = async (req, res) => {
+  try {
+    const { idClassExam } = req.params;
+    const classExam = await ClassExam.findById(idClassExam);
+
+    res.render('build/teacher/faceCkeckofTeacher', { idClassExam, classExam });
+  } catch (error) {
+    console.error("Error in renderForm:", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
 }

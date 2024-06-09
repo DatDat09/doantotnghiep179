@@ -405,7 +405,9 @@
                                             <th
                                                 class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                                                 Email</th>
-
+                                            <th
+                                                class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-normal  text-slate-400 opacity-70">
+                                                ĐIỂM DANH</th>
                                     </thead>
                                     <tbody>
                                         <% let counter=1; listStudentByClassExam.forEach(function(user){ %>
@@ -441,7 +443,20 @@
                                                         <%= user.username %>
                                                     </h6>
                                                 </td>
-
+                                                <td
+                                                    class="p-2 pr-6 align-middle bg-transparent border-b dark:border-white/40 whitespace-normal shadow-transparent">
+                                                    <h6
+                                                        class="mb-0 text-xs font-bold leading-tight dark:text-white dark:opacity-80">
+                                                        <% if (user.attended) { %>
+                                                            Đã điểm danh
+                                                            <% } else { %>
+                                                                Chưa điểm danh
+                                                                <% } %>
+                                                                    <% if (!user.inClass) { %>
+                                                                        - Không có trong lớp thi
+                                                                        <% } %>
+                                                    </h6>
+                                                </td>
                                             </tr>
                                             <% counter++; }); %>
                                     </tbody>

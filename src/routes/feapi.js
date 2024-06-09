@@ -115,6 +115,9 @@ routerAPI.get('/faceCheckAttend/:idClassExam', faceController.renderForm);
 routerAPI.post('/check-face/:idClassExam', faceController.checkFaceByClassExam);
 routerAPI.get('/get-recognized-name/:userId', faceController.getFaceByName);
 
+routerAPI.get('/faceCheckAttend1/:idClassExam', faceController.renderForm1);
+// routerAPI.post('/check-face-teacher', middleware.verifyToken, middleware.roleTeacher, checkFaceByTeacher)
+// routerAPI.get('/get-recognized-name/:id', middleware.verifyToken, middleware.roleTeacher, getFaceByTeacher)
 
 
 module.exports = routerAPI;

@@ -8,7 +8,7 @@ const { getAllCTDT, searchCTDTByName, putEditCTDT, postNewCTDT, deleteACTDT }
     = require('../controller/ctdtController')
 const { getCourse, getClassbyCourse, postCourses, putCourses, deteteCourses }
     = require('../controller/courseController')
-const { getClass, postClass, putClass, deteteClass, getStudentinClass, deleteStudentFromClass, addStudentToClass, createSchedule }
+const { getClass, postClass, putClass, deteteClass, getStudentinClass, deleteStudentFromClass, addStudentToClass, createSchedule, searchStudents }
     = require('../controller/classController')
 const { getClassExams, searchClassExamsByName, getStudentByClassExam, postClassExams, putClassExams, deleteClassExams }
     = require('../controller/classExamController')
@@ -88,10 +88,10 @@ routerAPI.delete('/courses/:idCourse', deteteCourses)
 
 //Lớp học
 routerAPI.post('/create-schedule', createSchedule);
-
 routerAPI.post('/class/:classId/student/:studentId', middleware.verifyToken, addStudentToClass);
 routerAPI.delete('/class/:classId/student/:studentId', middleware.verifyToken, deleteStudentFromClass);
 routerAPI.get('/class/:idClass', middleware.verifyToken, getStudentinClass)
+routerAPI.get('/:idClass/search-students', searchStudents);
 routerAPI.get('/class', middleware.verifyToken, getClass)
 routerAPI.post('/class', postClass)
 routerAPI.put('/class/:idClass', putClass)
@@ -106,18 +106,15 @@ routerAPI.put('/classExams/:id', middleware.verifyToken, putClassExams)
 routerAPI.delete('/classExams', middleware.verifyToken, deleteClassExams)
 
 //Điểm danh lớp thi
+
 const faceController = require('../controller/faceController');
 routerAPI.post('/post-face', faceController.postFace);
 routerAPI.post('/check-face', faceController.checkFace);
-
 routerAPI.get('/faceCheckAttend', faceController.renderForm);
 routerAPI.get('/faceCheckAttend/:idClassExam', faceController.renderForm);
 routerAPI.post('/check-face/:idClassExam', faceController.checkFaceByClassExam);
 routerAPI.get('/get-recognized-name/:userId', faceController.getFaceByName);
-
 routerAPI.get('/faceCheckAttend1/:idClassExam', faceController.renderForm1);
-// routerAPI.post('/check-face-teacher', middleware.verifyToken, middleware.roleTeacher, checkFaceByTeacher)
-// routerAPI.get('/get-recognized-name/:id', middleware.verifyToken, middleware.roleTeacher, getFaceByTeacher)
 
 
 module.exports = routerAPI;

@@ -9,7 +9,23 @@ const Class = require("../models/class")
 const ClassExam = require("../models/classExam")
 const classExam = require("../models/classExam")
 const Joi = require('joi');
+async function getStudentsArray(idClass) {
+  // Fetch students array based on class ID
+  const classData = await Class.findById(idClass).populate('idStudents');
+  if (!classData) {
+    return [];
+  }
 
+  // Create a map to store unique students
+  const uniqueStudents = new Map();
+  classData.idStudents.forEach(student => {
+    uniqueStudents.set(student._id.toString(), { ...student._doc, inClass: true, attended: false });
+  });
+
+  // Convert unique students map to array
+  const studentsArray = Array.from(uniqueStudents.values());
+  return studentsArray;
+}
 module.exports = {
   getClass: async (req, res) => {
     try {
@@ -85,38 +101,99 @@ module.exports = {
   getStudentinClass: async (req, res) => {
     try {
       const { idClass } = req.params;
-      let classData = await Class.findById(idClass).populate('idStudents');
+      const currentPage = parseInt(req.query.page) || 1;
+      const itemsPerPage = parseInt(req.query.limit) || 5;
+
+      // Find the class data including the students
+      const classData = await Class.findById(idClass).populate('idStudents');
       if (!classData) {
         return res.status(404).send("Class not found");
       }
 
-      // Tạo danh sách sinh viên duy nhất và đánh dấu trạng thái
-      let uniqueStudents = new Map();
+      // Create a map to store unique students
+      const uniqueStudents = new Map();
       classData.idStudents.forEach(student => {
         uniqueStudents.set(student._id.toString(), { ...student._doc, inClass: true, attended: false });
       });
 
-      const results = await User.find({ role: 'student' });
+      const totalStudents = uniqueStudents.size;
+      const totalPages = Math.ceil(totalStudents / itemsPerPage);
 
-      // Đánh dấu trạng thái sinh viên đã có trong lớp
-      results.forEach(user => {
-        if (uniqueStudents.has(user._id.toString())) {
-          user.inClass = true;
+      // Paginate the students
+      const studentsArray = Array.from(uniqueStudents.values());
+      const paginatedStudents = studentsArray.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+      // Find all users with role 'student' (Assuming this is where listUserByCTDT comes from)
+      const allStudents = await User.find({ role: 'student' });
+
+      // Mark students who are already in the class
+      allStudents.forEach(student => {
+        if (uniqueStudents.has(student._id.toString())) {
+          student.inClass = true;
         } else {
-          user.inClass = false;
+          student.inClass = false;
         }
       });
 
-      return res.render('build/pages/listStudentAD.ejs', {
-        listStudentByClass: Array.from(uniqueStudents.values()),
-        listUserByCTDT: results,
-        classId: idClass // Pass classId to the template
+      // Render the template with the data
+      res.render('build/pages/listStudentAD.ejs', {
+        listStudentByClass: paginatedStudents,
+        listUserByCTDT: allStudents,
+        classId: idClass,
+        totalPages: totalPages,
+        currentPage: currentPage
       });
     } catch (error) {
       console.error("Error fetching class data:", error);
-      return res.status(500).send("Internal Server Error");
+      res.status(500).send("Internal Server Error");
+    }
+  }
+
+  ,
+  searchStudents: async (req, res) => {
+    try {
+      const { idClass } = req.params;
+      const currentPage = parseInt(req.query.page) || 1;
+      const itemsPerPage = parseInt(req.query.limit) || 5;
+      const searchInputCode = req.query.mssv || ''; // Lấy mã sinh viên từ query string
+      const searchInputName = req.query.name || ''; // Lấy tên sinh viên từ query string
+
+      // Find the class data including the students
+      const classData = await Class.findById(idClass).populate('idStudents');
+      if (!classData) {
+        return res.status(404).send("Class not found");
+      }
+
+      // Filter students based on search criteria (mã sinh viên và tên sinh viên)
+      const filteredStudents = classData.idStudents.filter(student => {
+        return student.mssv.includes(searchInputCode) && student.name.includes(searchInputName);
+      });
+
+      const totalStudents = filteredStudents.length;
+      const totalPages = Math.ceil(totalStudents / itemsPerPage);
+
+      // Paginate the filtered students
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = currentPage * itemsPerPage;
+      const paginatedStudents = filteredStudents.slice(startIndex, endIndex);
+
+      const allStudents = await User.find({ role: 'student' });
+
+      // Render the template with the data
+      res.render('build/pages/listStudentAD.ejs', {
+        listStudentByClass: paginatedStudents,
+        listUserByCTDT: allStudents,
+        classId: idClass,
+        totalPages: totalPages,
+        currentPage: currentPage
+      });
+    } catch (error) {
+      console.error("Error searching for students:", error);
+      res.status(500).send("Internal Server Error");
     }
   },
+
+
   addStudentToClass: async (req, res) => {
     try {
       const { classId, studentId } = req.params;

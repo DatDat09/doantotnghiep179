@@ -23,16 +23,33 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            text-align: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 20px;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .left-column,
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .left-column {
+            align-items: flex-start;
         }
 
         h1 {
             font-size: 24px;
+            color: #5E72E4;
+            /* Primary purple color */
             margin-bottom: 20px;
         }
 
         form {
+            width: 100%;
             margin-bottom: 20px;
         }
 
@@ -47,7 +64,8 @@
 
         input[type="submit"],
         button {
-            background-color: #28a745;
+            background-color: #5E72E4;
+            /* Primary purple color */
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -55,28 +73,35 @@
             cursor: pointer;
             font-size: 16px;
             margin: 10px 0;
+            transition: background-color 0.3s ease;
         }
 
         input[type="submit"]:hover,
         button:hover {
-            background-color: #218838;
+            background-color: #5E72E4;
+            /* Darker purple color */
         }
 
         video,
         canvas,
         img {
             margin-top: 10px;
+            max-width: 100%;
             display: none;
         }
 
         .controls {
             margin-top: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
         }
 
         .spinner {
             display: none;
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
+            border-top: 4px solid #5E72E4;
+            /* Primary purple color */
             border-radius: 50%;
             width: 30px;
             height: 30px;
@@ -95,7 +120,7 @@
         }
 
         .back-button {
-            background-color: #007bff;
+            background-color: #5E72E4;
             color: #fff;
             border: none;
             padding: 10px 20px;
@@ -108,6 +133,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: background-color 0.3s ease;
         }
 
         .back-button:hover {
@@ -117,63 +143,132 @@
         .back-button i {
             margin-right: 8px;
         }
+
+        #recognizedPhoto {
+            display: none;
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        #recognizedPhoto.show {
+            display: block;
+            transform: scale(1.05);
+        }
+
+        #resultSection {
+            width: 100%;
+            text-align: center;
+        }
+
+        #resultSection h2 {
+            margin-bottom: 20px;
+            color: #6a1b9a;
+            /* Primary purple color */
+        }
+
+        #recognizedPersonsList,
+        #unrecognizedCount {
+            text-align: left;
+        }
+
+        .notifications {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ffdddd;
+            border-left: 6px solid #f44336;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .notifications .alert {
+            position: relative;
+            /* padding: 10px 20px; */
+            /* border-radius: 5px; */
+            color: black;
+            transition: all 0.5s;
+            margin-bottom: 10px;
+        }
+
+        .notifications .alert-show {
+            width: auto;
+            max-width: 200px;
+            /* Độ rộng tối đa của thanh notifications khi nội dung được hiển thị */
+            transition: max-width 0.5s ease-in-out;
+            /* Hiệu ứng transition cho chiều rộng */
+        }
+
+        .notifications .alert-hidden {
+            max-width: 0;
+            padding: 0;
+            margin: 0;
+            border: none;
+            overflow: hidden;
+            height: 20px;
+            /* Thêm thuộc tính height: auto để giữ nguyên chiều cao */
+            opacity: 0;
+            /* Biến mất chữ */
+            transition: max-width 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            /* Thêm transition cho opacity */
+        }
     </style>
 </head>
 
 <body>
-    <div class="notifications"></div>
+    <div class="notifications" id="notification"></div>
     <div class="container">
-        <h1>Face Recognition System</h1>
-        <button class="back-button" onclick="window.location.href='/classExamsTeacher'"><i
-                class="fas fa-arrow-left"></i></button>
+        <div class="left-column">
+            <h1>Face Recognition System</h1>
+            <button class="back-button" onclick="window.location.href='/classExamsTeacher'"><i
+                    class="fas fa-arrow-left"></i>Back</button>
 
-        <!-- Form for uploading image -->
-        <form id="uploadForm" action="/check-face/<%=idClassExam%>" method="POST" encType="multipart/form-data">
-            <input type="file" id="fileInput" name="File1" />
-            <input type="submit" value="Upload Image" />
-        </form>
-        <!-- Video and Canvas elements -->
-        <video id="video" width="320" height="240" autoplay></video>
-        <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
-        <!-- Image element to display captured photo -->
-        <img id="photo" width="320" height="240">
-        <!-- Controls buttons -->
-        <div class="controls">
-            <button id="toggleCamera">Turn On Camera</button>
-            <button id="capture">Capture</button>
-            <button id="retake" style="display: none;">Retake</button>
+            <!-- Form for uploading image -->
+            <form id="uploadForm" action="/check-face/<%=idClassExam%>" method="POST" encType="multipart/form-data">
+                <input type="file" id="fileInput" name="File1" />
+                <input type="submit" value="Upload Image" />
+            </form>
+            <!-- Video and Canvas elements -->
+            <video id="video" width="480" height="320" autoplay></video>
+            <canvas id="canvas" width="480" height="320" style="display:none;"></canvas>
+            <!-- Image element to display captured photo -->
+            <img id="photo" width="480" height="320">
+            <!-- Controls buttons -->
+            <div class="controls">
+                <button id="toggleCamera">Turn On Camera</button>
+                <button id="capture">Capture</button>
+                <button id="retake" style="display: none;">Retake</button>
+            </div>
+            <!-- Spinner element -->
+            <div id="spinner" class="spinner"></div>
         </div>
-        <!-- Spinner element -->
-        <div id="spinner" class="spinner"></div>
-        <!-- Result section to display recognized person -->
-        <div id="resultSection" style="display: none;">
-            <p id="recognizedPerson"></p>
-            <p id="recognizedDistance"></p>
+        <div class="right-column">
+            <!-- Image element to display recognized photo -->
+            <img id="recognizedPhoto" width="480" height="360">
+            <!-- Result section to display recognized persons -->
+            <div id="resultSection" style="display: none;">
+                <h2>Recognized Persons</h2>
+                <div id="recognizedPersonsList"></div>
+                <div id="unrecognizedCount"></div>
+            </div>
         </div>
     </div>
 
-    <!-- add face for training -->
-    <!-- <div class="form-section">
-        <h2>Add Face for Training</h2>
-        <form action="/post-face" method="post" encType="multipart/form-data">
-            <input type="text" name="label" placeholder="Label" required />
-            <input type="file" name="File1" required />
-            <input type="submit" value="Add Face" />
-        </form>
-    </div> -->
-    </div>
-    <!-- JavaScript code -->
     <script>
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
         const context = canvas.getContext('2d');
         const photo = document.getElementById('photo');
+        const recognizedPhoto = document.getElementById('recognizedPhoto');
         const captureButton = document.getElementById('capture');
         const retakeButton = document.getElementById('retake');
         const fileInput = document.getElementById('fileInput');
         const uploadForm = document.getElementById('uploadForm');
         const toggleCameraButton = document.getElementById('toggleCamera');
         const spinner = document.getElementById('spinner');
+        const recognizedPersonsList = document.getElementById('recognizedPersonsList');
+        const unrecognizedCountDiv = document.getElementById('unrecognizedCount');
 
         let stream = null;
 
@@ -197,7 +292,6 @@
             }
         }
 
-        // Capture a photo
         captureButton.addEventListener('click', () => {
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             photo.src = canvas.toDataURL('image/jpeg');
@@ -207,7 +301,6 @@
             captureButton.style.display = 'none';
             retakeButton.style.display = 'inline-block';
 
-            // Create a file from the captured image and add it to the file input
             canvas.toBlob(blob => {
                 const capturedFile = new File([blob], "captured_image.jpeg", { type: "image/jpeg" });
                 const dataTransfer = new DataTransfer();
@@ -216,16 +309,15 @@
             });
         });
 
-        // Retake photo
         retakeButton.addEventListener('click', () => {
             video.style.display = 'block';
             canvas.style.display = 'none';
             photo.style.display = 'none';
+            recognizedPhoto.style.display = 'none';
             captureButton.style.display = 'inline-block';
             retakeButton.style.display = 'none';
         });
 
-        // Toggle camera
         toggleCameraButton.addEventListener('click', () => {
             if (stream) {
                 stopCamera();
@@ -234,18 +326,13 @@
             }
         });
 
-        // Process the form submission
         uploadForm.addEventListener('submit', async (event) => {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault();
 
-            // Show spinner
             spinner.style.display = 'block';
 
-            // Get the form data
             const formData = new FormData(uploadForm);
 
-
-            // Send the form data to the server using fetch API
             try {
                 const response = await fetch("/check-face/<%=idClassExam%>", {
                     method: "POST",
@@ -254,102 +341,64 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    // Update the recognized person information
-                    // if (data.result[0]._label == 'unknown') {
-                    // noPersonRecognizedPerson(result)
-                    // }
-                    // else{
-                    updateRecognizedPerson(data.result);
-                    // }
-                } else {
+                    console.log("Data received: ", data);
+
+                    // Tạo thông báo thành công
+                    const notificationDiv = document.getElementById('notification');
+                    notificationDiv.innerHTML = '<div class="alert alert-success alert-show">Nhận diện thành công</div>';
+
+                    // Hiển thị thông báo trong 3 giây và sau đó ẩn nó đi
+                    setTimeout(() => {
+                        const alert = notificationDiv.querySelector('.alert');
+                        alert.classList.remove('alert-show');
+                        alert.classList.add('alert-hidden'); // Thêm lớp alert-hidden để ẩn thông báo
+                    }, 3000);
+
+
+                    // Hiển thị hình ảnh đã lưu với khuôn mặt được nhận diện
+                    recognizedPhoto.src = data.outputImagePath.replace(/^.*?public/, ''); // Loại bỏ phần đường dẫn tuyệt đối
+
+                    recognizedPhoto.style.display = 'block';
+                    photo.style.display = 'none';
+
+                    // Cập nhật danh sách người được nhận diện
+                    updateRecognizedPersonsList(data.recognizedUsers, data.unrecognizedCount);
+                }
+                else {
                     console.error("Error:", response.statusText);
                 }
             } catch (error) {
                 console.error("Error:", error);
             }
 
-            // Hide spinner
             spinner.style.display = 'none';
         });
-        async function noPersonRecognizedPerson(result) {
-            const resultSection = document.getElementById('resultSection');
-            const recognizedPerson = document.getElementById('recognizedPerson');
-            const recognizedDistance = document.getElementById('recognizedDistance');
 
+        async function updateRecognizedPersonsList(recognizedUsers, unrecognizedCount) {
+            recognizedPersonsList.innerHTML = '';
 
-            recognizedPerson.textContent = "No person recognized.";
-            recognizedDistance.textContent = "";
-            resultSection.style.display = 'block';
-            // Check if result is not empty
-            // if (result && result.length > 0) {
-            //     const recognizedUserId = result[0]._label;
-
-            //     try {
-            //         // Fetch user name based on recognizedUserId from the server
-            //         const response = await fetch(`/get-recognized-name/${recognizedUserId}`);
-            //         if (response.ok) {
-            //             const data = await response.json();
-            //             const recognizedName = data.name;
-            //             const recognizedDist = result[0]._distance;
-            //             recognizedPerson.textContent = `Điểm danh thành công: ${recognizedName}`;
-            //             recognizedDistance.textContent = `Recognized distance: ${recognizedDist}`;
-            //             resultSection.style.display = 'block';
-            //         } else {
-            //             console.error("Error:", response.statusText);
-            //         }
-            //     } catch (error) {
-            //         console.error("Error:", error);
-            //     }
-            // } else {
-            //     recognizedPerson.textContent = "No person recognized.";
-            //     recognizedDistance.textContent = "";
-            //     resultSection.style.display = 'block';
-            // }
-        }
-        // Function to update recognized person information
-        // Function to update recognized person information
-        async function updateRecognizedPerson(result) {
-            const resultSection = document.getElementById('resultSection');
-            const recognizedPerson = document.getElementById('recognizedPerson');
-            const recognizedDistance = document.getElementById('recognizedDistance');
-
-            if (result[0]._label == 'unknown') {
-                recognizedPerson.textContent = "Không nhận diện được sinh viên";
-                recognizedDistance.textContent = '';
-                resultSection.style.display = 'block';
-            }
-            // Check if result is not empty
-            else if (result && result.length > 0) {
-                const recognizedUserId = result[0]._label;
-
-                try {
-                    // Fetch user name based on recognizedUserId from the server
-                    const response = await fetch(`/get-recognized-name/${recognizedUserId}`);
-                    if (response.ok) {
-                        const data = await response.json();
-                        const recognizedName = data.name;
-                        const recognizedDist = result[0]._distance;
-                        recognizedPerson.textContent = `Điểm danh thành công: ${recognizedName}`;
-                        recognizedDistance.textContent = `Recognized distance: ${recognizedDist}`;
-                        resultSection.style.display = 'block';
-                    } else {
-                        console.error("Error:", response.statusText);
-                    }
-                } catch (error) {
-                    console.error("Error:", error);
+            recognizedUsers.forEach(user => {
+                const userElement = document.createElement('div');
+                if (user.recognized) {
+                    userElement.innerHTML = `<p>Success: ${user.name} : ${user.mssv} - Distance: ${user.distance}</p>`;
+                } else {
+                    userElement.innerHTML = `<p>Không nhận diện được sinh viên - Distance: ${user.distance}</p>`;
                 }
+                recognizedPersonsList.appendChild(userElement);
+            });
+
+            if (unrecognizedCount > 0) {
+                unrecognizedCountDiv.innerHTML = `<p>Số lượng sinh viên không nhận diện được: ${unrecognizedCount}</p>`;
             } else {
-                recognizedPerson.textContent = "No person recognized.";
-                recognizedDistance.textContent = "";
-                resultSection.style.display = 'block';
+                unrecognizedCountDiv.innerHTML = '';
             }
+
+            document.getElementById('resultSection').style.display = 'block';
         }
 
 
-        // Initial camera state
         stopCamera();
     </script>
-
 </body>
 
 </html>

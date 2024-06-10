@@ -571,12 +571,11 @@
                             <div id="search-input"
                                 class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
                                 <input type="text" placeholder="Tìm mã sinh viên"
-                                    class="focus:shadow-primary-outline text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"></input>
+                                    class="focus:shadow-primary-outline text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                             </div>
                             <div class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
-                                <!-- Nội dung cột 2 -->
                                 <input type="text" placeholder="Tìm tên sinh viên"
-                                    class="focus:shadow-primary-outline text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none"></input>
+                                    class="focus:shadow-primary-outline text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                             </div>
                             <div class="md:w-1/2 lg:w-1/3 xl:w-1/4 max-w-xs lg:max-w-md xl:max-w-lg p-4">
                                 <div class="flex flex-row">
@@ -592,27 +591,58 @@
                                     </button>
                                 </div>
                             </div>
-                            <script>
-                                document.getElementById('search-button').addEventListener('click', function () {
-                                    const searchInputCode = document.querySelector('input[placeholder="Tìm mã sinh viên"]').value;
-                                    const searchInputName = document.querySelector('input[placeholder="Tìm tên sinh viên"]').value;
-                                    const url = new URL(window.location.href);
-                                    url.pathname = '/studentADSearchName';
-                                    url.searchParams.set('page', 1);  // Thiết lập trang mặc định là 1
-                                    if (searchInputCode) {
-                                        url.searchParams.set('mssv', searchInputCode);
-                                    }
-                                    if (searchInputName) {
-                                        url.searchParams.set('name', searchInputName);
-                                    }
-                                    window.location.href = url.toString();
-                                });
-                                document.getElementById('reset-button').addEventListener('click', function () {
-                                    window.location.href = ``; // Đặt lại trang về /students/ctdts?page=1
-                                });
-                            </script>
-
                         </div>
+                        <script>
+                            document.getElementById('search-button').addEventListener('click', function () {
+                                const searchInputCode = document.querySelector('input[placeholder="Tìm mã sinh viên"]').value;
+                                const searchInputName = document.querySelector('input[placeholder="Tìm tên sinh viên"]').value;
+                                // Lấy URL hiện tại
+                                const currentURL = window.location.href;
+
+                                // Tạo một đối tượng URL từ URL hiện tại
+                                const url = new URL(currentURL);
+
+                                // Lấy tham số từ URL
+                                const idClass = url.pathname.split('/').pop(); // Lấy idClass từ đường dẫn URL
+
+                                if (!idClass) {
+                                    console.error("idClass is missing from the URL");
+                                    return;
+                                }
+
+                                url.pathname = `/${idClass}/search-students`;
+                                url.searchParams.set('page', 1);  // Set default page to 1
+                                if (searchInputCode) {
+                                    url.searchParams.set('mssv', searchInputCode);
+                                }
+                                if (searchInputName) {
+                                    url.searchParams.set('name', searchInputName);
+                                }
+
+                                window.location.href = url.toString();
+                            });
+
+
+
+                            document.getElementById('reset-button').addEventListener('click', function () {
+                                const currentURL = window.location.href;
+                                const url = new URL(currentURL);
+                                const pathnameParts = url.pathname.split('/');
+                                let idClass = null;
+                                // Kiểm tra xem nếu đường dẫn URL chứa '/search-students', thì lấy idClass từ phần tử trước đó
+                                if (pathnameParts.includes('search-students')) {
+                                    const index = pathnameParts.indexOf('search-students');
+                                    idClass = pathnameParts[index - 1];
+                                } else {
+                                    // Nếu không, lấy idClass từ phần tử cuối cùng của đường dẫn URL
+                                    idClass = pathnameParts.pop();
+                                }
+                                window.location.href = `/class/${idClass}?page=1`;
+                            });
+
+
+                        </script>
+
 
                         <div class="flex-auto px-0 pt-0 pb-2">
                             <div class="p-0 overflow-x-auto">
@@ -719,7 +749,62 @@
             </div>
         </div>
         <!-- end cards -->
+        <!-- Pagination Controls -->
+        <div style="text-align:center; margin-top: 20px;">
+            <style>
+                .pagination {
+                    display: inline-block;
+                    padding: 0;
+                    margin: 0;
+                }
 
+                .pagination a,
+                .pagination span {
+                    color: #6a0dad;
+                    float: left;
+                    padding: 8px 16px;
+                    text-decoration: none;
+                    transition: background-color 0.3s;
+                    border: 1px solid #ddd;
+                    margin: 0 4px;
+                    border-radius: 4px;
+                }
+
+                .pagination a:hover {
+                    background-color: #ddd;
+                }
+
+                .pagination a.active {
+                    background-color: #6a0dad;
+                    color: white;
+                    border: 1px solid #6a0dad;
+                }
+            </style>
+            <div class="pagination">
+                <% if (typeof totalPages !=='undefined' && totalPages> 1) { %>
+                    <a href="?page=<%= currentPage > 1 ? currentPage - 1 : 1 %>"
+                        class="pagination-link <%= currentPage === 1 ? 'disabled' : '' %>">Previous</a>
+                    <% for (let i=1; i <=totalPages; i++) { %>
+                        <a href="?page=<%= i %>" class="pagination-link <%= currentPage === i ? 'active' : '' %>">
+                            <%= i %>
+                        </a>
+                        <% } %>
+                            <% if (currentPage < totalPages) { %>
+                                <a href="?page=<%= currentPage + 1 %>" class="pagination-link">Next</a>
+                                <% } else { %>
+                                    <span class="pagination-link">Next</span>
+                                    <% } %>
+                                        <% } %>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const activeLink = document.querySelector('.pagination-link.active');
+                    if (activeLink) {
+                        activeLink.style.fontWeight = 'bold';
+                    }
+                });
+            </script>
+        </div>
     </main>
 
     <!-- -->

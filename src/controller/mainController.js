@@ -24,14 +24,14 @@ module.exports = {
     getProfile: async (req, res) => {
         try {
             const user = await User.findById(req.user.id).populate('idCtdt').exec();
-    
+
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
             }
-    
+
             // Construct image path based on mssv and stored image filename
             const imagePath = user.image ? `/img/avt/${user.image}` : '/img/avt/default.jpg';
-    
+
             res.render('build/pages/profile.ejs', {
                 user: user,
                 imagePath: imagePath

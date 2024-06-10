@@ -55,6 +55,7 @@ routerAPI.post('/login', loginUser); //check login
 routerAPI.get('/logout', Logout); //clear token
 routerAPI.get('/profile', middleware.verifyToken, getProfile); //Trang cá nhân
 
+
 //Khoa viện
 routerAPI.get('/ctdts', middleware.verifyToken, getAllCTDT) //Hiển thị tất cả ctdts
 routerAPI.get('/ctdtsSearchName', middleware.verifyToken, searchCTDTByName); //search theo tên ctdt
@@ -96,6 +97,7 @@ routerAPI.get('/class', middleware.verifyToken, getClass)
 routerAPI.post('/class', postClass)
 routerAPI.put('/class/:idClass', putClass)
 routerAPI.delete('/class/:idClass', deteteClass)
+
 
 //Lớp thi
 routerAPI.get('/classExams', middleware.verifyToken, getClassExams)

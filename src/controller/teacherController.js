@@ -233,5 +233,24 @@ module.exports = {
             return res.status(500).send("Internal Server Error");
         }
     },
+    getProfileT: async (req, res) => {
+        try {
+            const user = await User.findById(req.user.id).populate('idCtdt').exec();
 
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            // Construct image path based on mssv and stored image filename
+            const imagePath = user.image ? `/img/avt/${user.image}` : '/img/avt/default.jpg';
+
+            res.render('build/teacher/profileT.ejs', {
+                user: user,
+                imagePath: imagePath
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    },
 }

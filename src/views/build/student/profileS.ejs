@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" sizes="76x76" href="../img/apple-icon.png" />
+    <link rel="icon" type="image/png" href="../img/favicon.png" />
+    <title>Profile</title>
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <!-- Nucleo Icons -->
+    <link href="../css/nucleo-icons.css" rel="stylesheet" />
+    <link href="../css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Popper -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <!-- Main Styling -->
+    <link href="../css/argon-dashboard-tailwind.css?v=1.0.1" rel="stylesheet" />
+</head>
+
+<body
+    class="m-0 font-sans antialiased font-normal dark:bg-slate-900 text-base leading-default bg-gray-50 text-slate-500">
+    <div
+        class="absolute bg-y-50 w-full top-0 bg-[url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/img/profile-layout-header.jpg')] min-h-75">
+        <span class="absolute top-0 left-0 w-full h-full bg-blue-500 opacity-60"></span>
+    </div>
+
+    <aside
+        class="fixed inset-y-0 flex-wrap items-center justify-between block w-full p-0 my-4 overflow-y-auto antialiased transition-transform duration-200 -translate-x-full bg-white border-0 shadow-xl dark:shadow-none dark:bg-slate-850 max-w-64 ease-nav-brand z-990 xl:ml-6 rounded-2xl xl:left-0 xl:translate-x-0"
+        aria-expanded="false">
+        <div class="h-19">
+            <i
+                class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"></i>
+            <a class="block px-8 py-6 m-0 text-sm whitespace-nowrap dark:text-white text-slate-700"
+                href="./mainStudent">
+                <img src="./img/logo-ct-dark.png"
+                    class="inline h-full max-w-full transition-all duration-200 dark:hidden ease-nav-brand max-h-8"
+                    alt="main_logo" />
+                <img src="./img/logo-ct.png"
+                    class="hidden h-full max-w-full transition-all duration-200 dark:inline ease-nav-brand max-h-8"
+                    alt="main_logo" />
+                <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Hệ thống quản lý đào
+                    tạo</span>
+            </a>
+        </div>
+
+        <hr
+            class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
+
+        <div class="items-center block w-auto max-h-screen overflow-auto grow basis-full">
+            <ul class="flex flex-col pl-0 mb-0">
+                <li class="mt-0.5 w-full">
+                    <a class="py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 font-semibold text-slate-700 transition-colors hover:bg-blue-200 hover:text-slate-700"
+                        href="./mainStudent">
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                            <i class="text-sm leading-normal text-blue-500 ni ni-shop"></i>
+                        </div>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Trang chủ</span>
+                    </a>
+                </li>
+
+                <!---->
+                <li class="mt-0.5 w-full">
+                    <div x-data="{ open: false }">
+                        <a @click="open = !open"
+                            class="py-2.7 dark:text-white dark:opacity-80 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap rounded-lg px-4 transition-colors hover:bg-blue-200 hover:text-slate-700">
+                            <div
+                                class="icon-container mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                                <i class="relative top-0 text-sm leading-normal text-blue-500 ni ni-tv-2"></i>
+                            </div>
+                            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Dữ liệu hệ thống</span>
+
+
+                            <span class="ml-auto">
+                                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path x-show="! open" d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" style="display: none;"></path>
+                                    <path x-show="open" d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </span>
+                        </a>
+                        <div x-show="open" class="pl-7 mt-2">
+                            <div class="w-full">
+                                <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 "
+                                    href="/coursesStudent">
+
+                                    <span
+                                        class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none">
+                                        D
+                                    </span>
+
+                                    <span class="transition-all duration-100 pointer-events-none ease">Quản lý học
+                                        phần</span>
+                                </a>
+                            </div>
+
+
+                            <div class="w-full">
+                                <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 "
+                                    href="/classStudent">
+
+                                    <span
+                                        class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none">
+                                        D
+                                    </span>
+
+                                    <span class="transition-all duration-100 pointer-events-none ease">Quản lý lớp
+                                        học</span>
+                                </a>
+                            </div>
+
+                            <div class="w-full">
+                                <a class="ease-in-out py-2.7 ml-5.4 pl-4 leading-default text-sm relative my-0 mr-2 flex items-center whitespace-nowrap bg-transparent pr-4 font-medium text-slate-800/50 shadow-none transition-colors  dark:text-white dark:opacity-60 "
+                                    href="/classExamsStudent">
+
+                                    <span
+                                        class="w-0 text-center transition-all duration-200 ease-in-out opacity-0 pointer-events-none">
+                                        D
+                                    </span>
+
+                                    <span class="transition-all duration-100 pointer-events-none ease">Quản lý lớp
+                                        thi</span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </li>
+                <script src="./js/alpine.js" async></script>
+
+
+
+
+                <li class="w-full mt-4">
+                    <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60">Account
+                        pages</h6>
+                </li>
+                <li class="mt-0.5 w-full">
+                    <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        href="/listClassStudent">
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                            <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-calendar-grid-58"></i>
+                        </div>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Thời Khóa Biểu</span>
+                    </a>
+                </li>
+
+                <li class="mt-0.5 w-full">
+                    <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        href="./profileS">
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                            <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-single-02"></i>
+                        </div>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Profile</span>
+                    </a>
+                </li>
+
+
+
+                <!-- <li class="mt-0.5 w-full">
+                    <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+                        href="./signup">
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+                            <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-collection"></i>
+                        </div>
+                        <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Sign Up</span>
+                    </a>
+                </li> -->
+            </ul>
+        </div>
+    </aside>
+
+    <div class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68">
+        <nav class="absolute z-20 flex flex-wrap items-center justify-between w-full px-6 py-2 -mt-56 text-white transition-all ease-in shadow-none duration-250 lg:flex-nowrap lg:justify-start"
+            navbar-profile navbar-scroll="true">
+            <div class="flex items-center justify-between w-full px-6 py-1 mx-auto flex-wrap-inherit">
+                <nav>
+                    <!-- breadcrumb -->
+                    <ol class="flex flex-wrap pt-1 pl-2 pr-4 mr-12 bg-transparent rounded-lg sm:mr-16">
+                        <li class="leading-normal text-sm">
+                            <a class="opacity-50" href="javascript:;">Pages</a>
+                        </li>
+                        <li class="text-sm pl-2 capitalize leading-normal before:float-left before:pr-2 before:content-['/']"
+                            aria-current="page">Profile</li>
+                    </ol>
+                    <h6 class="mb-2 ml-2 font-bold text-white capitalize dark:text-white">Profile</h6>
+                </nav>
+
+                <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
+                    <div class="flex items-center md:ml-auto md:pr-4">
+
+                    </div>
+                    <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
+
+                        <li class="flex items-center">
+                            <a href="/" id="logoutLink"
+                                class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand">
+                                <i class="fa fa-user sm:mr-1"></i>
+                                <span class="hidden sm:inline">Logout</span>
+                            </a>
+                        </li>
+                        <script>
+                            document.getElementById('logoutLink').addEventListener('click', async function (event) {
+                                event.preventDefault();
+
+                                try {
+                                    const response = await fetch('/logout', {
+                                        method: 'GET',
+                                        credentials: 'same-origin'
+                                    });
+
+                                    if (response.ok) {
+                                        window.location.href = '/';
+                                    } else {
+                                        alert('Failed to log out. Please try again.');
+                                    }
+                                } catch (error) {
+                                    console.error('Error during logout:', error);
+                                    alert('An error occurred during logout. Please try again.');
+                                }
+                            });
+                        </script>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="relative w-full mx-auto mt-60 ">
+
+            <div
+                class="relative flex flex-col flex-auto min-w-0 p-4 mx-6 overflow-hidden break-words bg-white border-0 dark:bg-slate-850 dark:shadow-dark-xl shadow-3xl rounded-2xl bg-clip-border">
+                <div class="flex flex-wrap -mx-3">
+                    <div class="flex-none w-auto max-w-full px-3">
+                        <div
+                            class="relative inline-flex items-center justify-center text-white transition-all duration-200 ease-in-out text-base h-19 w-19 rounded-xl">
+                            <img src="<%= imagePath %>" alt="profile_image" class="w-full shadow-2xl rounded-xl" />
+
+                        </div>
+                    </div>
+                    <div class="flex-none w-auto max-w-full px-3 my-auto">
+                        <div class="h-full">
+                            <h5 class="mb-1 dark:text-white">
+                                <%= user.name %>
+                            </h5>
+                            <p class="mb-0 font-semibold leading-normal dark:text-white dark:opacity-60 text-sm">
+                                University
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="w-full p-6 mx-auto">
+            <form id="profileForm" action="/profile/update" method="POST">
+                <div class="flex flex-wrap -mx-3">
+                    <div class="w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-0">
+                        <div
+                            class="relative flex flex-col min-w-0 break-words bg-white border-0 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
+
+                            <div class="flex-auto p-6">
+                                <p class="leading-normal uppercase dark:text-white dark:opacity-60 text-sm">User
+                                    Information</p>
+                                <div class="flex flex-wrap -mx-3">
+                                    <!-- Username Field -->
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                                        <div class="mb-4">
+                                            <label for="username"
+                                                class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Username</label>
+                                            <input type="text" name="username" id="username"
+                                                value="<%= user.username %>"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                        </div>
+                                    </div>
+                                    <!-- Email Field -->
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                                        <div class="mb-4">
+                                            <label for="email"
+                                                class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Email</label>
+                                            <input type="email" name="email" id="email" value="<%= user.email %>"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                        </div>
+                                    </div>
+                                    <!-- Full Name Field -->
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                                        <div class="mb-4">
+                                            <label for="fullname"
+                                                class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Full
+                                                name</label>
+                                            <input type="text" name="fullname" id="fullname" value="<%= user.name %>"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                        </div>
+                                    </div>
+                                    <!-- Sex Field -->
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                                        <div class="mb-4">
+                                            <label for="sex"
+                                                class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Giới
+                                                tính</label>
+                                            <input type="text" name="sex" id="sex" value="<%= user.sex %>"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                        </div>
+                                    </div>
+                                    <!-- MSSV Field -->
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                                        <div class="mb-4">
+                                            <label for="mssv"
+                                                class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Mssv</label>
+                                            <input type="text" name="mssv" id="mssv" value="<%= user.mssv %>"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                        </div>
+                                    </div>
+                                    <!-- Year Field -->
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                                        <div class="mb-4">
+                                            <label for="year"
+                                                class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Khóa</label>
+                                            <input type="text" name="year" id="year" value="<%= user.khoa %>"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                        </div>
+                                    </div>
+                                    <!-- CTDTS Field -->
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                                        <div class="mb-4">
+                                            <label for="ctdts"
+                                                class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Chương
+                                                trình</label>
+                                            <input type="text" name="ctdts" id="ctdts"
+                                                value="<%= user.idCtdt ? user.idCtdt.name : 'N/A' %>"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                        </div>
+                                    </div>
+                                    <!-- Status Field -->
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                                        <div class="mb-4">
+                                            <label for="status"
+                                                class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Tình
+                                                trạng
+                                                học tập</label>
+                                            <input type="text" name="status" id="status" value="Học"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                        </div>
+                                    </div>
+                                    <!-- Address Field -->
+                                    <div class="w-full max-w-full px-3 shrink-0 md:w-full md:flex-0">
+                                        <div class="mb-4">
+                                            <label for="address"
+                                                class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">Address</label>
+                                            <input type="text" name="address" id="address" value="<%= user.address %>"
+                                                class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+</body>
+<!-- plugin for scrollbar  -->
+<script src="../js/plugins/perfect-scrollbar.min.js" async></script>
+<!-- main script file  -->
+<script src="../js/argon-dashboard-tailwind.js?v=1.0.1" async></script>
+
+</html>

@@ -13,8 +13,8 @@ const { getClass, postClass, putClass, deteteClass, getStudentinClass, deleteStu
 const { getClassExams, searchClassExamsByName, getStudentByClassExam, postClassExams, putClassExams, deleteClassExams }
     = require('../controller/classExamController')
 const { loginUser, getMain, Login, Logout, getProfile, } = require('../controller/mainController')
-const { getMainStudent, getCourseStudent, getClassbyCourseStudent, getClassStudent, getClassExamsS, searchClassExamsByNameS, getStudentByClassExamS, putClassStudent, getStudentinClassStudent } = require('../controller/studentController')
-const { getMainTeacher, getCourseTeacher, getClassbyCourseTeacher, getClassTeacher, getClassExamsT, searchClassExamsByNameT, getTeacherByClassExamS, putClassTeacher, getTeacherinClassTeacher } = require('../controller/teacherController')
+const { getMainStudent, getCourseStudent, getClassbyCourseStudent, getClassStudent, getClassExamsS, searchClassExamsByNameS, getStudentByClassExamS, putClassStudent, getStudentinClassStudent, getProfileS } = require('../controller/studentController')
+const { getMainTeacher, getCourseTeacher, getClassbyCourseTeacher, getClassTeacher, getClassExamsT, searchClassExamsByNameT, getTeacherByClassExamS, putClassTeacher, getTeacherinClassTeacher, getProfileT } = require('../controller/teacherController')
 
 
 
@@ -32,7 +32,7 @@ routerAPI.put('/classStudentRegister', middleware.verifyToken, putClassStudent)
 routerAPI.get('/classExamsStudent', middleware.verifyToken, getClassExamsS)
 routerAPI.post('/classExamsS/search', middleware.verifyToken, searchClassExamsByNameS);
 routerAPI.get('/classExamsStudentsS/:idClassExam', middleware.verifyToken, getStudentByClassExamS);
-
+routerAPI.get('/profileS', middleware.verifyToken, getProfileS); //Trang cá nhân
 
 //TEACHER
 routerAPI.get('/mainTeacher', middleware.verifyToken, middleware.roleTeacher, getMainTeacher) //Trang dành cho teacher
@@ -44,7 +44,7 @@ routerAPI.put('/classTeacherRegister', middleware.verifyToken, putClassTeacher)
 routerAPI.get('/classExamsTeacher', middleware.verifyToken, getClassExamsT)
 routerAPI.post('/classExamsT/search', middleware.verifyToken, searchClassExamsByNameT);
 routerAPI.get('/classExamsTeacherS/:idClassExam', middleware.verifyToken, getTeacherByClassExamS);
-
+routerAPI.get('/profileT', middleware.verifyToken, getProfileT); //Trang cá nhân
 
 
 ///ADMIN

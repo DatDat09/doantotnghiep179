@@ -421,7 +421,7 @@
                                                         </button>
                                                         <button type="button"
                                                             class="ml-1 px-1 py-1 bg-blue-500 rounded-1.4 hover:-translate-y-px active:opacity-85 hover:shadow-md"
-                                                            onclick="showDialog_edit('<%= classes.name %>','<%= classes.malop %>','<%= classes.phongHoc %>','<%= classes.idStudents.length %>','<%= classes.maxStudent %>','<%= classes.startTime %>','<%= classes.endTime %>','<%= classes.thu %>', '<%= classes._id %>')">
+                                                            onclick="showDialog_edit('<%= classes.name %>','<%= classes.malop %>','<%= classes.phongHoc %>','<%= classes.idStudents.length %>','<%= classes.maxStudent %>','<%= classes.startTime %>','<%= classes.endTime %>','<%= classes.thu %>', '<%= classes._id %>', '<%= classes.idCourse %>')">
                                                             <img src="../img/ic/ic_edit.svg" class="w-4 h-4" alt="Icon">
                                                         </button>
                                                         <button type="button"
@@ -735,6 +735,9 @@ hidden z-50">
                             class="bg-gray-200 focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                     </div>
                 </div>
+
+                <input name="idCourse" value="" type="hidden">
+
             </div>
             <input name="id" type="hidden" value="">
             <button id="button_edit"
@@ -752,6 +755,8 @@ hidden z-50">
                     const newstartTime = document.querySelector("#dialog_edit input[name='startTime']").value;
                     const newendTime = document.querySelector("#dialog_edit input[name='endTime']").value;
                     const newthu = document.querySelector("#dialog_edit input[name='thu']").value;
+                    const newidCourse = document.querySelector("#dialog_edit input[name='idCourse']").value;
+
                     try {
                         // Gửi yêu cầu cập nhật dữ liệu đến máy chủ
                         const response = await fetch(`/class/${id}`, {
@@ -760,7 +765,6 @@ hidden z-50">
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
-
                                 name: newName,
                                 malop: newmalop,
                                 phongHoc: newphongHoc,
@@ -768,7 +772,8 @@ hidden z-50">
                                 maxStudent: newmaxStudent,
                                 startTime: newstartTime,
                                 endTime: newendTime,
-                                thu: newthu
+                                thu: newthu,
+                                idCourse: newidCourse
                             })
                         });
 
@@ -801,6 +806,8 @@ hidden z-50">
                 <input type="text" name="endTime">
                 <input type="text" name="thu">
                 <input type="hidden" name="id">
+                <input type="text" name="idCourse">
+
                 <button id="button_edit" class="hidden">Chỉnh sửa</button>
 
             </div>
@@ -809,7 +816,7 @@ hidden z-50">
     <script>
         let isAddButtonEventBound = false;
 
-        function showDialog_edit(name, malop, phongHoc, soluong, maxStudent, startTime, endTime, thu, id) {
+        function showDialog_edit(name, malop, phongHoc, soluong, maxStudent, startTime, endTime, thu, id, idCourse) {
 
             let dialog = document.getElementById("dialog_edit");
             dialog.classList.remove('hidden');
@@ -825,6 +832,8 @@ hidden z-50">
             let endTimeInput = document.querySelector("#dialog_edit input[name='endTime']");
             let thuInput = document.querySelector("#dialog_edit input[name='thu']");
             let idInput = document.querySelector("#dialog_edit input[name='id']");
+            let idCourseInput = document.querySelector("#dialog_edit input[name='idCourse']");
+
 
 
             // Fill in the input fields with data
@@ -838,6 +847,7 @@ hidden z-50">
             endTimeInput.value = endTime;
             thuInput.value = thu;
             idInput.value = id;
+            idCourseInput.value = idCourse
 
 
             // Display the edit button and hide the add button
@@ -857,7 +867,6 @@ hidden z-50">
             dialog.classList.remove('hidden');
 
             // Reset các giá trị input
-
             document.querySelector("#dialog_edit input[name='name']").value = "";
             document.querySelector("#dialog_edit input[name='malop']").value = "";
             document.querySelector("#dialog_edit input[name='phongHoc']").value = "";
@@ -868,10 +877,12 @@ hidden z-50">
             document.querySelector("#dialog_edit input[name='thu']").value = "";
             document.querySelector("#dialog_edit input[name='id']").value = "";
 
+            // Ensure idCourse is properly set
+            document.querySelector("#dialog_edit input[name='idCourse']").value = "<%= idCourse ? idCourse : '' %>";
+
             // Hiển thị nút thêm mới và ẩn nút chỉnh sửa
             document.getElementById("button_edit").classList.add('hidden');
             document.getElementById("button_add").classList.remove('hidden');
-
 
             // Gán sự kiện click cho nút "Thêm mới" nếu chưa được gán
             if (!isAddButtonEventBound) {
@@ -880,11 +891,7 @@ hidden z-50">
             }
         }
 
-
-
-
-        function addNewData() {
-
+        async function addNewData() {
             const newName = document.querySelector("#dialog_edit input[name='name']").value;
             const newmalop = document.querySelector("#dialog_edit input[name='malop']").value;
             const newphongHoc = document.querySelector("#dialog_edit input[name='phongHoc']").value;
@@ -893,88 +900,46 @@ hidden z-50">
             const newstartTime = document.querySelector("#dialog_edit input[name='startTime']").value;
             const newendTime = document.querySelector("#dialog_edit input[name='endTime']").value;
             const newthu = document.querySelector("#dialog_edit input[name='thu']").value;
+            const newidCourse = document.querySelector("#dialog_edit input[name='idCourse']").value.trim();
+
+            const data = {
+                name: newName,
+                malop: newmalop,
+                phongHoc: newphongHoc,
+                soluong: newsoluong,
+                maxStudent: newmaxStudent,
+                startTime: newstartTime,
+                endTime: newendTime,
+                thu: newthu,
+            };
+
+            // Only include idCourse if it is not empty
+            if (newidCourse) {
+                data.idCourse = newidCourse;
+            }
 
             try {
-                // Gửi yêu cầu thêm mới dữ liệu đến máy chủ
-                const response = fetch('/class', {
+                const response = await fetch('/class', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
+                    body: JSON.stringify(data)
+                });
 
-                        name: newName,
-                        malop: newmalop,
-                        phongHoc: newphongHoc,
-                        soluong: newsoluong,
-                        maxStudent: newmaxStudent,
-                        startTime: newstartTime,
-                        endTime: newendTime,
-                        thu: newthu
-                    })
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            // Nếu thêm mới thành công, làm gì đó (ví dụ: ẩn hộp thoại)
-                            hideDialog_edit();
-                            // Refresh lại trang hoặc làm gì đó để cập nhật dữ liệu hiển thị
-                            window.location.reload();
-                        } else {
-                            // Xử lý khi không thêm mới được dữ liệu
-                            console.error('Failed to add new data');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
+                if (response.ok) {
+                    hideDialog_edit();
+                    window.location.reload();
+                } else {
+                    console.error('Failed to add new data');
+                }
             } catch (error) {
                 console.error('Error:', error);
             }
         }
-        function addNewData1() {
-            const newName = document.querySelector("#dialog_edit input[name='name']").value;
-            const newmalop = document.querySelector("#dialog_edit input[name='malop']").value;
-            const newphongHoc = document.querySelector("#dialog_edit input[name='phongHoc']").value;
-            const newsoluong = document.querySelector("#dialog_edit input[name='soluong']").value;
-            const newmaxStudent = document.querySelector("#dialog_edit input[name='maxStudent']").value;
-            const newstartTime = document.querySelector("#dialog_edit input[name='startTime']").value;
-            const newendTime = document.querySelector("#dialog_edit input[name='endTime']").value;
-            const newthu = document.querySelector("#dialog_edit input[name='thu']").value;
 
-            try {
-                const idCourse = idCourse; // Thay YOUR_COURSE_ID_HERE bằng id của khóa học mà bạn muốn thêm lớp vào
 
-                // Gửi yêu cầu thêm mới dữ liệu đến máy chủ
-                const response = fetch(`/courses/${idCourse}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name: newName,
-                        malop: newmalop,
-                        phongHoc: newphongHoc,
-                        soluong: newsoluong,
-                        maxStudent: newmaxStudent,
-                        startTime: newstartTime,
-                        endTime: newendTime,
-                        thu: newthu
-                    })
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            // Nếu thêm mới thành công, làm gì đó (ví dụ: ẩn hộp thoại)
-                            hideDialog_edit();
-                            // Refresh lại trang hoặc làm gì đó để cập nhật dữ liệu hiển thị
-                            window.location.reload();
-                        } else {
-                            // Xử lý khi không thêm mới được dữ liệu
-                            console.error('Failed to add new data');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
+
 
     </script>
 

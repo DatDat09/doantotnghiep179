@@ -50,13 +50,13 @@ module.exports = {
         .limit(itemsPerPage);
       let results = await Class.find({});
       res.render('build/pages/class_management', {
-
         listClass: myClass,
         totalPages: totalPages,
         currentPage: currentPage,
         searchCode: searchCode,
         searchName: searchName,
-        listClassByCourse: results
+        listClassByCourse: results,
+        idCourse: null
       });
     } catch (error) {
       console.error(error);
@@ -68,13 +68,17 @@ module.exports = {
   postClass: async (req, res) => {
     const newData = req.body;
     try {
+      if (!newData.idCourse) {
+        delete newData.idCourse; // Remove idCourse if it's empty
+      }
       const createdData = await Class.create(newData);
-      res.status(201).json(createdData); // Trả về dữ liệu mới đã được thêm vào
+      res.status(201).json(createdData); // Return the newly created data
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'Internal Server Error' });
     }
-  },
+  }
+  ,
   putClass: async (req, res) => {
     const ClassID = req.params.idClass;
     const newData = req.body;

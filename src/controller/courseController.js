@@ -85,7 +85,7 @@ module.exports = {
       // Tìm các lớp thuộc về khóa học có ID tương ứng
       const classes = await Class.find({ idCourse: CourseID }).exec();
       // Render trang EJS và truyền danh sách lớp vào
-      res.render('build/pages/class_management.ejs', { listClass: classes });
+      res.render('build/pages/class_management.ejs', { listClass: classes, idCourse: CourseID });
     } catch (error) {
       console.error('Error retrieving classes by course:', error);
       res.status(500).send('Internal Server Error');
@@ -103,4 +103,4 @@ module.exports = {
       res.status(500).json({ message: 'Internal Server Error' });
     }
   },
-} 
+}

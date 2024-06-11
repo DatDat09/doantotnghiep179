@@ -45,11 +45,7 @@ module.exports = {
       res.status(500).send('Lỗi máy chủ');
     }
   },
-  getClassbyCourse: async (req, res) => {
-    const CourseID = req.params.idCourse;
-    let results = await Class.find({ idCourse: CourseID }).exec();
-    return res.render('build/pages/class_management.ejs', { listClass: results }) //listClassByCourse: results
-  },
+
   postCourses: async (req, res) => {
     const newData = req.body;
     try {
@@ -80,6 +76,30 @@ module.exports = {
       res.status(204).end(); // Trả về mã trạng thái 204 (No Content) khi xóa thành công
     } catch (err) {
       console.error(err);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  },
+  getClassbyCourse: async (req, res) => {
+    const CourseID = req.params.idCourse;
+    try {
+      // Tìm các lớp thuộc về khóa học có ID tương ứng
+      const classes = await Class.find({ idCourse: CourseID }).exec();
+      // Render trang EJS và truyền danh sách lớp vào
+      res.render('build/pages/class_management.ejs', { listClass: classes });
+    } catch (error) {
+      console.error('Error retrieving classes by course:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  },
+  postClassByCourse: async (req, res) => {
+    const CourseID = req.params.idCourse;
+    const newClassData = req.body;
+    try {
+      newClassData.idCourse = CourseID;  // Gán CourseID vào dữ liệu lớp mới
+      const createdClass = await Class.create(newClassData);
+      res.status(201).json(createdClass); // Trả về dữ liệu lớp mới đã được thêm vào
+    } catch (error) {
+      console.error('Error adding new class:', error);
       res.status(500).json({ message: 'Internal Server Error' });
     }
   },

@@ -253,4 +253,58 @@ module.exports = {
             return res.status(500).json({ message: 'Internal Server Error' });
         }
     },
+    getAllCTDTteacher: async (req, res) => {
+        try {
+            const page = parseInt(req.query.page) || 1;
+            const limit = 5; // Số lượng item trên mỗi trang
+            const skip = (page - 1) * limit;
+
+            const results = await CTDT.find({}).skip(skip).limit(limit);
+            const totalCTDTs = await CTDT.countDocuments({});
+            const totalPages = Math.ceil(totalCTDTs / limit);
+
+            return res.render('build/teacher/department_management3.ejs', {
+                listCTDT: results,
+                totalPages,
+                currentPage: page,
+                hasNextPage: page < totalPages,
+                hasPrevPage: page > 1,
+                nextPage: page + 1,
+                prevPage: page - 1,
+                lastPage: totalPages,
+                searchQuery: '' // Thêm biến searchQuery và thiết lập giá trị mặc định
+            });
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    },
+    searchCTDTByNameT: async (req, res) => {
+        const searchQuery = req.query.name || '';
+        const page = parseInt(req.query.page) || 1;
+        const limit = 5;
+        const skip = (page - 1) * limit;
+
+        try {
+            const query = { name: { $regex: searchQuery, $options: 'i' } };
+            const results = await CTDT.find(query).skip(skip).limit(limit);
+            const totalCTDTs = await CTDT.countDocuments(query);
+            const totalPages = Math.ceil(totalCTDTs / limit);
+
+            return res.render('build/teacher/department_management3.ejs', {
+                listCTDT: results,
+                searchQuery, // Truyền searchQuery vào view
+                totalPages,
+                currentPage: page,
+                hasNextPage: page < totalPages,
+                hasPrevPage: page > 1,
+                nextPage: page + 1,
+                prevPage: page - 1,
+                lastPage: totalPages
+            });
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    },
 }

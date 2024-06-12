@@ -14,7 +14,7 @@ const { getClassExams, searchClassExamsByName, getStudentByClassExam, postClassE
     = require('../controller/classExamController')
 const { loginUser, getMain, Login, Logout, getProfile, } = require('../controller/mainController')
 const { getMainStudent, getCourseStudent, getClassbyCourseStudent, getClassStudent, getClassExamsS, searchClassExamsByNameS, getStudentByClassExamS, putClassStudent, getStudentinClassStudent, getProfileS } = require('../controller/studentController')
-const { getMainTeacher, getCourseTeacher, getClassbyCourseTeacher, getClassTeacher, getClassExamsT, searchClassExamsByNameT, getTeacherByClassExamS, putClassTeacher, getTeacherinClassTeacher, getProfileT } = require('../controller/teacherController')
+const { getMainTeacher, getCourseTeacher, getClassbyCourseTeacher, getClassTeacher, getClassExamsT, searchClassExamsByNameT, getTeacherByClassExamS, putClassTeacher, getTeacherinClassTeacher, getProfileT, getAllCTDTteacher, searchCTDTByNameT } = require('../controller/teacherController')
 
 
 
@@ -45,8 +45,8 @@ routerAPI.get('/classExamsTeacher', middleware.verifyToken, getClassExamsT)
 routerAPI.post('/classExamsT/search', middleware.verifyToken, searchClassExamsByNameT);
 routerAPI.get('/classExamsTeacherS/:idClassExam', middleware.verifyToken, getTeacherByClassExamS);
 routerAPI.get('/profileT', middleware.verifyToken, getProfileT); //Trang cá nhân
-
-
+routerAPI.get('/ctdtsTeacher', middleware.verifyToken, getAllCTDTteacher)
+routerAPI.get('/ctdtsSearchNameT', middleware.verifyToken, searchCTDTByNameT);
 ///ADMIN
 //Trang chủ
 routerAPI.get('/main', middleware.verifyToken, getMain) //Trang dành cho admin

@@ -38,7 +38,8 @@ module.exports = {
         totalPages: totalPages,
         currentPage: currentPage,
         searchCode: searchCode,
-        searchName: searchName
+        searchName: searchName,
+        user: req.user
       });
     } catch (error) {
       console.error(error);
@@ -85,7 +86,7 @@ module.exports = {
       // Tìm các lớp thuộc về khóa học có ID tương ứng
       const classes = await Class.find({ idCourse: CourseID }).exec();
       // Render trang EJS và truyền danh sách lớp vào
-      res.render('build/pages/class_management.ejs', { listClass: classes, idCourse: CourseID });
+      res.render('build/pages/class_management.ejs', { listClass: classes, idCourse: CourseID, user: req.user });
     } catch (error) {
       console.error('Error retrieving classes by course:', error);
       res.status(500).send('Internal Server Error');

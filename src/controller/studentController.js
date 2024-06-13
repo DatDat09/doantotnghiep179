@@ -42,7 +42,8 @@ module.exports = {
                 totalPages: totalPages,
                 currentPage: currentPage,
                 searchCode: searchCode,
-                searchName: searchName
+                searchName: searchName,
+                user: req.user
             });
         } catch (error) {
             console.error(error);
@@ -83,7 +84,8 @@ module.exports = {
                 currentPage: currentPage,
                 searchCode: searchCode,
                 searchName: searchName,
-                listClassByCourse: results
+                listClassByCourse: results,
+                user: req.user
             });
         } catch (error) {
             console.error(error);
@@ -157,7 +159,7 @@ module.exports = {
                 });
 
 
-            return res.render('build/student/classexams_management2.ejs', { listClassExam: results });
+            return res.render('build/student/classexams_management2.ejs', { listClassExam: results, user: req.user });
         } catch (error) {
             console.error(error);
             res.status(500).send("Internal Server Error");

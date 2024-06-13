@@ -19,7 +19,10 @@ module.exports = {
 
   getStudentAPI: async (req, res) => {
     let results = await CTDT.find({});
-    return res.render('build/pages/student_management', { listCTDT: results })
+    return res.render('build/pages/student_management', {
+      listCTDT: results,
+      user: req.user
+    })
   },
   getStudentByCTDTAPI: async (req, res) => {
     try {
@@ -89,7 +92,7 @@ module.exports = {
   },
   getTeacherAPI: async (req, res) => {
     let results = await CTDT.find({});
-    return res.render('build/pages/lecturer_management', { listCTDT: results })
+    return res.render('build/pages/lecturer_management', { listCTDT: results, user: req.user })
   },
   searchTeacher: async (req, res) => {
     const searchQuery = req.query.name || '';

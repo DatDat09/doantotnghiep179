@@ -30,7 +30,8 @@ module.exports = {
         nextPage: page + 1,
         prevPage: page - 1,
         lastPage: totalPages,
-        searchQuery: '' // Thêm biến searchQuery và thiết lập giá trị mặc định
+        searchQuery: '', // Thêm biến searchQuery và thiết lập giá trị mặc định
+        user: req.user
       });
     } catch (err) {
       console.error(err);

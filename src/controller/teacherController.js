@@ -42,7 +42,8 @@ module.exports = {
                 totalPages: totalPages,
                 currentPage: currentPage,
                 searchCode: searchCode,
-                searchName: searchName
+                searchName: searchName,
+                user: req.user
             });
         } catch (error) {
             console.error(error);
@@ -83,7 +84,8 @@ module.exports = {
                 currentPage: currentPage,
                 searchCode: searchCode,
                 searchName: searchName,
-                listClassByCourse: results
+                listClassByCourse: results,
+                user: req.user
             });
         } catch (error) {
             console.error(error);
@@ -167,7 +169,7 @@ module.exports = {
                 });
 
 
-            return res.render('build/teacher/classexams_management3.ejs', { listClassExam: results });
+            return res.render('build/teacher/classexams_management3.ejs', { listClassExam: results, user: req.user });
         } catch (error) {
             console.error(error);
             res.status(500).send("Internal Server Error");
@@ -272,7 +274,8 @@ module.exports = {
                 nextPage: page + 1,
                 prevPage: page - 1,
                 lastPage: totalPages,
-                searchQuery: '' // Thêm biến searchQuery và thiết lập giá trị mặc định
+                searchQuery: '', // Thêm biến searchQuery và thiết lập giá trị mặc định
+                user: req.user
             });
         } catch (err) {
             console.error(err);

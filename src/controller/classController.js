@@ -56,7 +56,8 @@ module.exports = {
         searchCode: searchCode,
         searchName: searchName,
         listClassByCourse: results,
-        idCourse: null
+        idCourse: null,
+        user: req.user
       });
     } catch (error) {
       console.error(error);

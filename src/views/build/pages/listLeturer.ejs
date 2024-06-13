@@ -190,38 +190,54 @@
           <h6 class="mb-0 font-bold text-white capitalize">Teachers</h6>
         </nav>
 
-        <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
+        <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
+          <div class="flex items-center md:ml-auto md:pr-4">
+          </div>
+          <ul class="flex flex-row justify-end pl-0 mb-0 list-none md-max:w-full">
+            <li class="flex items-center">
+              <a href="/" id="logoutLink"
+                class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand">
+                <i class="fa fa-user sm:mr-1"></i>
+                <span class="hidden sm:inline">Logout</span>
+              </a>
+            </li>
+            <script>
+              document.getElementById('logoutLink').addEventListener('click', async function (event) {
+                event.preventDefault();
 
-          <li class="flex items-center">
-            <a href="/" id="logoutLink"
-              class="block px-0 py-2 text-sm font-semibold text-white transition-all ease-nav-brand">
-              <i class="fa fa-user sm:mr-1"></i>
-              <span class="hidden sm:inline">Logout</span>
-            </a>
-          </li>
-          <script>
-            document.getElementById('logoutLink').addEventListener('click', async function (event) {
-              event.preventDefault();
+                try {
+                  const response = await fetch('/logout', {
+                    method: 'GET',
+                    credentials: 'same-origin'
+                  });
 
-              try {
-                const response = await fetch('/logout', {
-                  method: 'GET',
-                  credentials: 'same-origin'
-                });
-
-                if (response.ok) {
-                  window.location.href = '/';
-                } else {
-                  alert('Failed to log out. Please try again.');
+                  if (response.ok) {
+                    window.location.href = '/';
+                  } else {
+                    alert('Failed to log out. Please try again.');
+                  }
+                } catch (error) {
+                  console.error('Error during logout:', error);
+                  alert('An error occurred during logout. Please try again.');
                 }
-              } catch (error) {
-                console.error('Error during logout:', error);
-                alert('An error occurred during logout. Please try again.');
-              }
-            });
-          </script>
+              });
+            </script>
+            <li class="flex items-center pl-4 xl:hidden">
+              <a href="javascript:;" class="block p-0 text-sm text-white transition-all ease-nav-brand" sidenav-trigger>
+                <div class="w-4.5 overflow-hidden">
+                  <i class="ease mb-0.75 relative block h-0.5 rounded-sm bg-white transition-all"></i>
+                  <i class="ease mb-0.75 relative block h-0.5 rounded-sm bg-white transition-all"></i>
+                  <i class="ease relative block h-0.5 rounded-sm bg-white transition-all"></i>
+                </div>
+              </a>
+            </li>
 
-        </ul>
+
+            <!-- notifications -->
+
+
+          </ul>
+        </div>
       </div>
     </nav>
     <!-- cards -->

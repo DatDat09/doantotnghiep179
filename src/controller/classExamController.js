@@ -50,6 +50,7 @@ module.exports = {
         currentPage: currentPage,
         searchCode: searchCode,
         searchName: searchName,
+        user: req.user
       });
     } catch (error) {
       console.error(error);

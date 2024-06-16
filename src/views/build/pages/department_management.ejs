@@ -692,7 +692,17 @@
         function addNewData() {
             const newName = document.querySelector("#dialog_edit input[name='name']").value;
             const newDescription = document.querySelector("#dialog_edit input[name='description']").value;
+            // Kiểm tra xem trường tên có được nhập hay không
+            if (newName.trim() === '') {
+                alert('Vui lòng nhập tên khoa!');
+                return; // Ngăn không cho gửi yêu cầu nếu tên không được nhập
+            }
 
+            // Kiểm tra độ dài của tên
+            if (newName.length <= 4) {
+                alert('Tên phải lớn hơn 4 chữ cái!');
+                return; // Ngăn không cho gửi yêu cầu nếu tên không hợp lệ
+            }
             try {
                 // Gửi yêu cầu thêm mới dữ liệu đến máy chủ
                 fetch('/ctdts', {
@@ -711,12 +721,14 @@
                             hideDialog_edit();
                             // Refresh lại trang hoặc làm gì đó để cập nhật dữ liệu hiển thị
                             window.location.reload();
+                            alert('Thêm mới thành công!');
                         } else {
                             // Xử lý khi không thêm mới được dữ liệu
                             console.error('Failed to add new data');
                         }
                     })
                     .catch(error => console.error('Error:', error));
+
             } catch (error) {
                 console.error('Error:', error);
             }

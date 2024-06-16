@@ -839,7 +839,17 @@
             const newmaHocPhan = document.querySelector("#dialog_edit input[name='maHocPhan']").value;
             const newtinChi = document.querySelector("#dialog_edit input[name='tinChi']").value;
             const newdescription = document.querySelector("#dialog_edit input[name='description']").value;
+            // Kiểm tra các trường thông tin có được nhập đầy đủ hay không
+            if (!newName || !newmaHocPhan || !newtinChi || !newdescription) {
+                alert('Vui lòng nhập đầy đủ thông tin');
+                return;
+            }
 
+            // Kiểm tra tin chỉ phải là một số dương
+            if (isNaN(newtinChi) || newtinChi <= 0) {
+                alert('Số tín chỉ phải là một số dương');
+                return;
+            }
             try {
                 // Gửi yêu cầu thêm mới dữ liệu đến máy chủ
                 const response = fetch('/courses', {
@@ -861,6 +871,7 @@
                             hideDialog_edit();
                             // Refresh lại trang hoặc làm gì đó để cập nhật dữ liệu hiển thị
                             window.location.reload();
+                            alert('Thêm mới dữ liệu thành công');
                         } else {
                             // Xử lý khi không thêm mới được dữ liệu
                             console.error('Failed to add new data');

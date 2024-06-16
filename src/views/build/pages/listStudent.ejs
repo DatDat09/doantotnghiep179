@@ -909,6 +909,22 @@
             const newSex = document.querySelector("#dialog_edit input[name='sex']").value;
             const newUsername = document.querySelector("#dialog_edit input[name='username']").value;
             // const newPassword = document.querySelector("#dialog_edit input[name='password']").value;  // Lấy giá trị password
+            // Kiểm tra các trường thông tin có được nhập đầy đủ hay không
+            if (!newMssv || !newPhone || !newName || !newSex || !newUsername) {
+                alert('Vui lòng nhập đầy đủ thông tin');
+                return;
+            }
+
+            // Kiểm tra giới tính chỉ được là 'male' hoặc 'female'
+            if (newSex !== 'male' && newSex !== 'female') {
+                alert('Giới tính chỉ có thể là "male" hoặc "female"');
+                return;
+            }
+            const usernamePattern = /^@sis\.hust\.edu\.vn$/;
+            if (!usernamePattern.test(newUsername)) {
+                alert('Username phải có định dạng @sis.hust.edu.vn');
+                return;
+            }
             try {
                 // Gửi yêu cầu thêm mới dữ liệu đến máy chủ
                 const response = fetch('/student', {
@@ -932,6 +948,7 @@
                             hideDialog_edit();
                             // Refresh lại trang hoặc làm gì đó để cập nhật dữ liệu hiển thị
                             window.location.reload();
+                            alert('Thêm mới dữ liệu thành công');
                         } else {
                             // Xử lý khi không thêm mới được dữ liệu
                             console.error('Failed to add new data');

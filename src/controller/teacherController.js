@@ -53,7 +53,7 @@ module.exports = {
     getClassbyCourseTeacher: async (req, res) => {
         const CourseID = req.params.idCourse;
         let results = await Class.find({ idCourse: CourseID }).exec();
-        return res.render('build/teacher/class_management3.ejs', { listClass: results })
+        return res.render('build/teacher/class_management3.ejs', { listClass: results, user: req.user })
     },
     getClassTeacher: async (req, res) => {
         try {

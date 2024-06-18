@@ -10,7 +10,7 @@ const { getCourse, getClassbyCourse, postCourses, putCourses, deteteCourses, pos
     = require('../controller/courseController')
 const { getClass, postClass, putClass, deteteClass, getStudentinClass, deleteStudentFromClass, addStudentToClass, createSchedule, searchStudents }
     = require('../controller/classController')
-const { getClassExams, searchClassExamsByName, getStudentByClassExam, postClassExams, putClassExams, deleteClassExams }
+const { getClassExams, searchClassExamsByName, getStudentByClassExam, postClassExams, putClassExams, deleteClassExams, searchStudentsExam, addStudentToClassExam, deleteStudentFromClassExam }
     = require('../controller/classExamController')
 const { loginUser, getMain, Login, Logout, getProfile, } = require('../controller/mainController')
 const { getMainStudent, getCourseStudent, getClassbyCourseStudent, getClassStudent, getClassExamsS, searchClassExamsByNameS, getStudentByClassExamS, putClassStudent, getStudentinClassStudent, getProfileS } = require('../controller/studentController')
@@ -101,6 +101,10 @@ routerAPI.delete('/class/:idClass', deteteClass)
 
 
 //Lớp thi
+routerAPI.get('/:idClassExam/search-students', searchStudentsExam);
+routerAPI.post('/classExam/:idClassExam/student/:studentId', middleware.verifyToken, addStudentToClassExam);
+routerAPI.delete('/classExam/:idClassExam/student/:studentId', middleware.verifyToken, deleteStudentFromClassExam);
+
 routerAPI.get('/classExams', middleware.verifyToken, getClassExams)
 routerAPI.post('/classExams/search', middleware.verifyToken, searchClassExamsByName);
 routerAPI.get('/classExamsStudents/:idClassExam', middleware.verifyToken, getStudentByClassExam);

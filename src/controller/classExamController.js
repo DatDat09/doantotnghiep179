@@ -87,38 +87,7 @@ module.exports = {
     }
   },
 
-  getStudentByClassExam: async (req, res) => {
-    try {
-      const { idClassExam } = req.params;
-      let classExamData = await classExam.findById(idClassExam).populate('idStudents').populate('idStudentsDiemDanh');
-      if (!classExamData) {
-        return res.status(404).send("Class Exam not found");
-      }
 
-      // Tạo danh sách sinh viên duy nhất và đánh dấu trạng thái
-      let uniqueStudents = new Map();
-
-      classExamData.idStudents.forEach(student => {
-        uniqueStudents.set(student._id.toString(), { ...student._doc, inClass: true, attended: false });
-      });
-
-      classExamData.idStudentsDiemDanh.forEach(student => {
-        if (uniqueStudents.has(student._id.toString())) {
-          uniqueStudents.get(student._id.toString()).attended = true;
-        } else {
-          uniqueStudents.set(student._id.toString(), { ...student._doc, inClass: false, attended: true });
-        }
-      });
-
-      return res.render('build/pages/listStudentInClassExam.ejs', {
-        listStudentByClassExam: Array.from(uniqueStudents.values()),
-        idClassExam: idClassExam
-      });
-    } catch (error) {
-      console.error("Error fetching class exam data:", error);
-      return res.status(500).send("Internal Server Error");
-    }
-  },
   postClassExams: async (req, res) => {
     const newData = req.body;
     try {
@@ -152,5 +121,133 @@ module.exports = {
       console.error(err);
       res.status(500).json({ message: 'Internal Server Error' });
     }
-  }
+  },
+  searchStudentsExam: async (req, res) => {
+    try {
+      const { idClassExam } = req.params;
+      const currentPage = parseInt(req.query.page) || 1;
+      const itemsPerPage = parseInt(req.query.limit) || 5;
+      const searchInputCode = req.query.mssv || ''; // Lấy mã sinh viên từ query string
+      const searchInputName = req.query.name || ''; // Lấy tên sinh viên từ query string
+
+      // Find the class data including the students
+      const classExamData = await Class.findById(idClassExam).populate('idStudents');
+      if (!classExamData) {
+        return res.status(404).send("Class not found");
+      }
+
+      // Filter students based on search criteria (mã sinh viên và tên sinh viên)
+      const filteredStudents = classExamData.idStudents.filter(student => {
+        return student.mssv.includes(searchInputCode) && student.name.includes(searchInputName);
+      });
+
+      const totalStudents = filteredStudents.length;
+      const totalPages = Math.ceil(totalStudents / itemsPerPage);
+
+      // Paginate the filtered students
+      const startIndex = (currentPage - 1) * itemsPerPage;
+      const endIndex = currentPage * itemsPerPage;
+      const paginatedStudents = filteredStudents.slice(startIndex, endIndex);
+
+      const allStudents = await User.find({ role: 'student' });
+
+      // Render the template with the data
+      res.render('build/pages/listStudentInClassExam.ejs', {
+        listStudentByClassExam: paginatedStudents,
+        listUserByCTDT: allStudents,
+        classExamId: idClassExam,
+        totalPages: totalPages,
+        currentPage: currentPage
+      });
+    } catch (error) {
+      console.error("Error searching for students:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+
+  getStudentByClassExam: async (req, res) => {
+    try {
+      const { idClassExam } = req.params;
+      let classExamData = await classExam.findById(idClassExam).populate('idStudents').populate('idStudentsDiemDanh');
+      if (!classExamData) {
+        return res.status(404).send("Class Exam not found");
+      }
+
+      // Tạo danh sách sinh viên duy nhất và đánh dấu trạng thái
+      let uniqueStudents = new Map();
+
+      classExamData.idStudents.forEach(student => {
+        uniqueStudents.set(student._id.toString(), { ...student._doc, inClass: true, attended: false });
+      });
+
+      classExamData.idStudentsDiemDanh.forEach(student => {
+        if (uniqueStudents.has(student._id.toString())) {
+          uniqueStudents.get(student._id.toString()).attended = true;
+        } else {
+          uniqueStudents.set(student._id.toString(), { ...student._doc, inClass: false, attended: true });
+        }
+      });
+      const allStudents = await User.find({ role: 'student' });
+
+      // Mark students who are already in the class
+      allStudents.forEach(student => {
+        if (uniqueStudents.has(student._id.toString())) {
+          student.inClassExam = true;
+        } else {
+          student.inClassExam = false;
+        }
+      });
+      return res.render('build/pages/listStudentInClassExam.ejs', {
+        listStudentByClassExam: Array.from(uniqueStudents.values()),
+        listUserByCTDT: allStudents,
+        idClassExam: idClassExam
+      });
+    } catch (error) {
+      console.error("Error fetching class exam data:", error);
+      return res.status(500).send("Internal Server Error");
+    }
+  },
+  addStudentToClassExam: async (req, res) => {
+    try {
+      const { idClassExam, studentId } = req.params;
+      let classExamData = await ClassExam.findById(idClassExam);
+
+      if (!classExamData) {
+        return res.status(404).send("Class not found");
+      }
+
+      if (!classExamData.idStudents.includes(studentId)) {
+        classExamData.idStudents.push(studentId);
+        await classExamData.save();
+      }
+
+      res.status(200).send("Student added to class");
+    } catch (error) {
+      console.error("Error adding student to class:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+
+
+
+  deleteStudentFromClassExam: async (req, res) => {
+    const { idClassExam, studentId } = req.params;
+
+    try {
+      const updatedClassExam = await ClassExam.findByIdAndUpdate(
+        idClassExam,
+        { $pull: { idStudents: studentId } },
+        { new: true }
+      );
+
+      if (!updatedClassExam) {
+        return res.status(404).json({ message: 'Class not found' });
+      }
+
+      res.status(200).json({ message: 'Student removed from class', updatedClassExam });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  },
 }

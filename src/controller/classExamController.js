@@ -228,26 +228,43 @@ module.exports = {
     }
   },
 
-
-
   deleteStudentFromClassExam: async (req, res) => {
     const { idClassExam, studentId } = req.params;
 
     try {
-      const updatedClassExam = await ClassExam.findByIdAndUpdate(
-        idClassExam,
-        { $pull: { idStudents: studentId } },
-        { new: true }
-      );
+      const classExam = await ClassExam.findById(idClassExam);
 
-      if (!updatedClassExam) {
+      if (!classExam) {
         return res.status(404).json({ message: 'Class not found' });
       }
 
-      res.status(200).json({ message: 'Student removed from class', updatedClassExam });
+      const updateFields = {};
+
+      if (classExam.idStudents.includes(studentId)) {
+        updateFields.idStudents = studentId;
+      }
+
+      if (classExam.idStudentsDiemDanh.includes(studentId)) {
+        updateFields.idStudentsDiemDanh = studentId;
+      }
+
+      if (Object.keys(updateFields).length === 0) {
+        return res.status(404).json({ message: 'Student not found in the class or attendance list' });
+      }
+
+      const updatedClassExam = await ClassExam.findByIdAndUpdate(
+        idClassExam,
+        {
+          $pull: updateFields
+        },
+        { new: true }
+      );
+
+      res.status(200).json({ message: 'Student removed from class and/or attendance list', updatedClassExam });
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'Internal Server Error' });
     }
-  },
+  }
+
 }

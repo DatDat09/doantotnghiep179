@@ -14,15 +14,25 @@ module.exports = {
   getAllCTDT: async (req, res) => {
     try {
       const page = parseInt(req.query.page) || 1;
-      const limit = 5; // Số lượng item trên mỗi trang
+      const limit = 5; // Số lượng mục trên mỗi trang
       const skip = (page - 1) * limit;
 
-      const results = await CTDT.find({}).skip(skip).limit(limit);
+      const results = await CTDT.find({})
+        .populate('lecturers', 'name') // Điền thêm thông tin giảng viên
+        .skip(skip)
+        .limit(limit);
+
+      // Tính số lượng giảng viên cho mỗi CTDT
+      const resultsWithLecturerCount = results.map(ctdt => ({
+        ...ctdt.toObject(),
+        lecturerCount: ctdt.lecturers.length
+      }));
+
       const totalCTDTs = await CTDT.countDocuments({});
       const totalPages = Math.ceil(totalCTDTs / limit);
 
       return res.render('build/pages/department_management.ejs', {
-        listCTDT: results,
+        listCTDT: resultsWithLecturerCount,
         totalPages,
         currentPage: page,
         hasNextPage: page < totalPages,
@@ -30,7 +40,7 @@ module.exports = {
         nextPage: page + 1,
         prevPage: page - 1,
         lastPage: totalPages,
-        searchQuery: '', // Thêm biến searchQuery và thiết lập giá trị mặc định
+        searchQuery: '',
         user: req.user
       });
     } catch (err) {
@@ -38,6 +48,7 @@ module.exports = {
       return res.status(500).json({ message: 'Internal Server Error' });
     }
   },
+
   searchCTDTByName: async (req, res) => {
     const searchQuery = req.query.name || '';
     const page = parseInt(req.query.page) || 1;
@@ -46,13 +57,23 @@ module.exports = {
 
     try {
       const query = { name: { $regex: searchQuery, $options: 'i' } };
-      const results = await CTDT.find(query).skip(skip).limit(limit);
+      const results = await CTDT.find(query)
+        .populate('lecturers', 'name') // Điền thêm thông tin giảng viên
+        .skip(skip)
+        .limit(limit);
+
+      // Tính số lượng giảng viên cho mỗi CTDT
+      const resultsWithLecturerCount = results.map(ctdt => ({
+        ...ctdt.toObject(),
+        lecturerCount: ctdt.lecturers.length
+      }));
+
       const totalCTDTs = await CTDT.countDocuments(query);
       const totalPages = Math.ceil(totalCTDTs / limit);
 
       return res.render('build/pages/department_management.ejs', {
-        listCTDT: results,
-        searchQuery, // Truyền searchQuery vào view
+        listCTDT: resultsWithLecturerCount,
+        searchQuery,
         totalPages,
         currentPage: page,
         hasNextPage: page < totalPages,
@@ -100,4 +121,13 @@ module.exports = {
       res.status(500).json({ message: 'Internal Server Error' });
     }
   },
+  // dashboardController: async (req, res) => {
+  //   try {
+  //     const totalDepartments = await CTDT.countDocuments();
+  //     res.render('build/pages/department_management.ejs', { totalDepartments, user: req.user });
+  //   } catch (err) {
+  //     console.error(err);
+  //     res.status(500).json({ message: 'Lỗi Server' });
+  //   }
+  // }
 }

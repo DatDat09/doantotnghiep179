@@ -18,11 +18,16 @@ const classExam = require("../models/classExam")
 module.exports = {
 
   getStudentAPI: async (req, res) => {
-    let results = await CTDT.find({});
-    return res.render('build/pages/student_management', {
-      listCTDT: results,
-      user: req.user
-    })
+    try {
+      let results = await CTDT.find({});
+      return res.render('build/pages/student_management', {
+        listCTDT: results,
+        user: req.user
+      });
+    } catch (error) {
+      console.error("Error fetching CTDT:", error);
+      res.status(500).send("Internal Server Error");
+    }
   },
   getStudentByCTDTAPI: async (req, res) => {
     try {
@@ -91,8 +96,16 @@ module.exports = {
     }
   },
   getTeacherAPI: async (req, res) => {
-    let results = await CTDT.find({});
-    return res.render('build/pages/lecturer_management', { listCTDT: results, user: req.user })
+    try {
+      let results = await CTDT.find({}).populate('lecturers');
+      return res.render('build/pages/lecturer_management', {
+        listCTDT: results,
+        user: req.user
+      });
+    } catch (error) {
+      console.error("Error fetching CTDT:", error);
+      res.status(500).send("Internal Server Error");
+    }
   },
   searchTeacher: async (req, res) => {
     const searchQuery = req.query.name || '';

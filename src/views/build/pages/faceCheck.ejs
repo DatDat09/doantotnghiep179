@@ -173,7 +173,7 @@
             text-align: left;
         }
 
-        .notifications {
+        /* .notifications {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -181,7 +181,7 @@
             border-left: 6px solid #f44336;
             padding: 20px;
             margin-bottom: 15px;
-        }
+        } */
 
         .notifications .alert {
             position: relative;
@@ -343,16 +343,16 @@
                     const data = await response.json();
                     console.log("Data received: ", data);
 
-                    // Tạo thông báo thành công
-                    const notificationDiv = document.getElementById('notification');
-                    notificationDiv.innerHTML = '<div class="alert alert-success alert-show">Nhận diện thành công</div>';
+                    // // Tạo thông báo thành công
+                    // const notificationDiv = document.getElementById('notification');
+                    // notificationDiv.innerHTML = '<div class="alert alert-success alert-show">Nhận diện thành công</div>';
 
-                    // Hiển thị thông báo trong 3 giây và sau đó ẩn nó đi
-                    setTimeout(() => {
-                        const alert = notificationDiv.querySelector('.alert');
-                        alert.classList.remove('alert-show');
-                        alert.classList.add('alert-hidden'); // Thêm lớp alert-hidden để ẩn thông báo
-                    }, 3000);
+                    // // Hiển thị thông báo trong 3 giây và sau đó ẩn nó đi
+                    // setTimeout(() => {
+                    //     const alert = notificationDiv.querySelector('.alert');
+                    //     alert.classList.remove('alert-show');
+                    //     alert.classList.add('alert-hidden'); // Thêm lớp alert-hidden để ẩn thông báo
+                    // }, 3000);
 
 
                     // Hiển thị hình ảnh đã lưu với khuôn mặt được nhận diện

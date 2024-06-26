@@ -15,6 +15,7 @@ const ctdtSchema = new mongoose.Schema(
       default: "Đại học Bách Khoa Hà Nội" // Set default value here
     },
     // idCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'course' }],
+    lecturers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }]
   },
   {
     timestamps: true, // createdAt, updatedAt

@@ -854,11 +854,11 @@
         alert('Giới tính chỉ có thể là "male" hoặc "female"');
         return;
       }
-      const usernamePattern = /^@sis\.hust\.edu\.vn$/;
-      if (!usernamePattern.test(newUsername)) {
-        alert('Username phải có định dạng @sis.hust.edu.vn');
-        return;
-      }
+      // const usernamePattern = /^@sis\.hust\.edu\.vn$/;
+      // if (!usernamePattern.test(newUsername)) {
+      //   alert('Username phải có định dạng @sis.hust.edu.vn');
+      //   return;
+      // }
       try {
         // Gửi yêu cầu thêm mới dữ liệu đến máy chủ
         const response = fetch('/teachers', {

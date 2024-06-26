@@ -4,7 +4,7 @@ const middleware = require('../middleware/middleware')
 
 const { getStudentAPI, getStudentByCTDTAPI, searchStudentByName, getTeachers, searchTeacher, editStudentById, getTeacherAPI, createStudent, deleteStudent, editTeacher, deleteTeacher, createTeacher }
     = require('../controller/userController')
-const { getAllCTDT, searchCTDTByName, putEditCTDT, postNewCTDT, deleteACTDT }
+const { getAllCTDT, searchCTDTByName, putEditCTDT, postNewCTDT, deleteACTDT, }
     = require('../controller/ctdtController')
 const { getCourse, getClassbyCourse, postCourses, putCourses, deteteCourses, postClassByCourse }
     = require('../controller/courseController')
@@ -12,7 +12,7 @@ const { getClass, postClass, putClass, deteteClass, getStudentinClass, deleteStu
     = require('../controller/classController')
 const { getClassExams, searchClassExamsByName, getStudentByClassExam, postClassExams, putClassExams, deleteClassExams, searchStudentsExam, addStudentToClassExam, deleteStudentFromClassExam }
     = require('../controller/classExamController')
-const { loginUser, getMain, Login, Logout, getProfile, } = require('../controller/mainController')
+const { loginUser, getMain, Login, Logout, getProfile, dashboardController } = require('../controller/mainController')
 const { getMainStudent, getCourseStudent, getClassbyCourseStudent, getClassStudent, getClassExamsS, searchClassExamsByNameS, getStudentByClassExamS, putClassStudent, getStudentinClassStudent, getProfileS } = require('../controller/studentController')
 const { getMainTeacher, getCourseTeacher, getClassbyCourseTeacher, getClassTeacher, getClassExamsT, searchClassExamsByNameT, getTeacherByClassExamS, putClassTeacher, getTeacherinClassTeacher, getProfileT, getAllCTDTteacher, searchCTDTByNameT } = require('../controller/teacherController')
 
@@ -62,6 +62,7 @@ routerAPI.get('/ctdtsSearchName', middleware.verifyToken, searchCTDTByName); //s
 routerAPI.put('/ctdts/:id', middleware.verifyToken, putEditCTDT); // PUT route to update data
 routerAPI.post('/ctdts', middleware.verifyToken, postNewCTDT); // Route để xử lý yêu cầu thêm mới dữ liệu
 routerAPI.delete('/ctdts/:id', middleware.verifyToken, deleteACTDT);// Route để xử lý yêu cầu xóa dữ liệu dựa trên _id
+
 
 
 ///User

@@ -12,9 +12,27 @@ const classExam = require("../models/classExam")
 
 module.exports = {
     getMain: async (req, res) => {
-        res.render('build/index.ejs', {
-            user: req.user
-        });
+        try {
+            const numberOfDepts = await CTDT.countDocuments(); // Tổng số khoa
+            const numberOfAllStudents = await User.countDocuments({ role: 'student' }); // Tổng số sinh viên
+            const numberOfAllLecturers = await User.countDocuments({ role: 'teacher' }); // Tổng số giảng viên
+            const numberOfClass = await Class.countDocuments(); // Tổng số môn học
+            const numberOfCourse = await Course.countDocuments();
+            const numberOfClassExam = await ClassExam.countDocuments();
+
+            res.render('build/index.ejs', {
+                user: req.user,
+                numberOfDepts,
+                numberOfAllStudents,
+                numberOfAllLecturers,
+                numberOfClass,
+                numberOfCourse,
+                numberOfClassExam
+            });
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ message: 'Lỗi máy chủ nội bộ' });
+        }
     },
     getMainStudent: async (req, res) => {
         res.render('build/student/index2.ejs', {
@@ -78,4 +96,5 @@ module.exports = {
         res.cookie('token', token, { httpOnly: true });
         return res.status(200).json({ message: 'Login successful', token });
     },
+
 }

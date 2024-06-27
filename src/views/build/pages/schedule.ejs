@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thời khóa biểu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,6 +21,9 @@
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
+            position: relative;
+            padding-bottom: 50px;
+            /* Add padding to avoid overlap with the button */
         }
 
         h1 {
@@ -46,7 +50,7 @@
         }
 
         th {
-            background-color: #4CAF50;
+            background-color: rgb(94 114 228);
             color: white;
         }
 
@@ -56,6 +60,31 @@
 
         tr:hover {
             background-color: #ddd;
+        }
+
+        .back-button {
+            background-color: #5E72E4;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-button i {
+            margin-right: 8px;
         }
     </style>
 </head>
@@ -95,7 +124,13 @@
                     <% }) %>
             </tbody>
         </table>
+        <button class="back-button" onclick="goBack()"><i class="fas fa-arrow-left"></i>Back</button>
     </div>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </body>
 
 </html>

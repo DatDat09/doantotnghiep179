@@ -8,7 +8,7 @@ const { getAllCTDT, searchCTDTByName, putEditCTDT, postNewCTDT, deleteACTDT, }
     = require('../controller/ctdtController')
 const { getCourse, getClassbyCourse, postCourses, putCourses, deteteCourses, postClassByCourse }
     = require('../controller/courseController')
-const { getClass, postClass, putClass, deteteClass, getStudentinClass, deleteStudentFromClass, addStudentToClass, createSchedule, searchStudents }
+const { getClass, postClass, putClass, deteteClass, getStudentinClass, deleteStudentFromClass, addStudentToClass, createSchedule, searchStudents, getSchedule }
     = require('../controller/classController')
 const { getClassExams, searchClassExamsByName, getStudentByClassExam, postClassExams, putClassExams, deleteClassExams, searchStudentsExam, addStudentToClassExam, deleteStudentFromClassExam }
     = require('../controller/classExamController')
@@ -33,6 +33,7 @@ routerAPI.get('/classExamsStudent', middleware.verifyToken, getClassExamsS)
 routerAPI.post('/classExamsS/search', middleware.verifyToken, searchClassExamsByNameS);
 routerAPI.get('/classExamsStudentsS/:idClassExam', middleware.verifyToken, getStudentByClassExamS);
 routerAPI.get('/profileS', middleware.verifyToken, getProfileS); //Trang cá nhân
+routerAPI.get('/scheduleS', middleware.verifyToken, getSchedule)
 
 //TEACHER
 routerAPI.get('/mainTeacher', middleware.verifyToken, middleware.roleTeacher, getMainTeacher) //Trang dành cho teacher
@@ -47,6 +48,8 @@ routerAPI.get('/classExamsTeacherS/:idClassExam', middleware.verifyToken, getTea
 routerAPI.get('/profileT', middleware.verifyToken, getProfileT); //Trang cá nhân
 routerAPI.get('/ctdtsTeacher', middleware.verifyToken, getAllCTDTteacher)
 routerAPI.get('/ctdtsSearchNameT', middleware.verifyToken, searchCTDTByNameT);
+routerAPI.get('/scheduleT', middleware.verifyToken, getSchedule)
+
 ///ADMIN
 //Trang chủ
 routerAPI.get('/main', middleware.verifyToken, getMain) //Trang dành cho admin
@@ -100,6 +103,8 @@ routerAPI.post('/class', postClass)
 routerAPI.put('/class/:idClass', putClass)
 routerAPI.delete('/class/:idClass', deteteClass)
 
+routerAPI.get('/schedule', middleware.verifyToken, getSchedule)
+
 
 //Lớp thi
 routerAPI.get('/:idClassExam/search-students', searchStudentsExam);
@@ -116,6 +121,7 @@ routerAPI.delete('/classExams', middleware.verifyToken, deleteClassExams)
 //Điểm danh lớp thi
 
 const faceController = require('../controller/faceController');
+const classController = require('../controller/classController')
 routerAPI.post('/post-face', faceController.postFace);
 routerAPI.post('/check-face', faceController.checkFace);
 routerAPI.get('/faceCheckAttend', faceController.renderForm);

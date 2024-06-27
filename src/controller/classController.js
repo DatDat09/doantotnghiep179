@@ -242,6 +242,17 @@ module.exports = {
       res.status(500).json({ message: 'Internal Server Error' });
     }
   },
+  // ------------------------------------------
+  getSchedule: async (req, res) => {
+    try {
+      const classes = await Class.find({ processed: true }).sort({ thu: 1, startTime: 1 }); // Lấy ra các lớp đã được xử lý và sắp xếp theo ngày học và giờ bắt đầu
+      res.render('build/pages/schedule.ejs', { classes });
+    } catch (error) {
+      console.error("Error fetching schedule:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+  // -------------------------------------------
   createSchedule: async (req, res) => {
     try {
       const classes = await Class.find({ processed: false }).sort({ malop: 1 }); // Lấy ra các lớp chưa được xử lý

@@ -164,7 +164,7 @@
         </li>
         <li class="mt-0.5 w-full">
           <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-            href="/listClassStudent">
+            href="/schedule">
             <div
               class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
               <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-calendar-grid-58"></i>
@@ -297,7 +297,7 @@
         <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
           <div
             class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border border-t-4 border-blue">
-            <div class="flex-auto p-4">
+            <a href="./ctdts" class="flex-auto p-4 no-underline">
               <div class="flex flex-row -mx-3">
                 <div class="flex-none w-2/3 max-w-full px-3">
                   <div>
@@ -318,7 +318,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
 
@@ -326,7 +326,7 @@
         <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
           <div
             class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border border-t-4 border-red">
-            <div class="flex-auto p-4">
+            <a href="./students/ctdts" class="flex-auto p-4 no-underline">
               <div class="flex flex-row -mx-3">
                 <div class="flex-none w-2/3 max-w-full px-3">
                   <div>
@@ -347,15 +347,16 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
 
+
         <!-- Phần Giảng Viên -->
-        <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+        <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
           <div
             class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border border-t-4 border-green">
-            <div class="flex-auto p-4">
+            <a href="./teachers/ctdts" class="flex-auto p-4 no-underline">
               <div class="flex flex-row -mx-3">
                 <div class="flex-none w-2/3 max-w-full px-3">
                   <div>
@@ -376,45 +377,47 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
+
 
         <!-- Phần Môn Học -->
         <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
           <div
             class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border border-t-4 border-orange">
-            <div class="flex-auto p-4">
+            <a href="./class" class="flex-auto p-4 no-underline">
               <div class="flex flex-row -mx-3">
                 <div class="flex-none w-2/3 max-w-full px-3">
                   <div>
                     <p
                       class="mb-0 font-sans font-semibold leading-normal uppercase dark:text-white dark:opacity-60 text-sm">
-                      Tổng số môn học
+                      Tổng số lớp học
                     </p>
                     <h5 class="mb-2 font-bold dark:text-white text-orange">
                       <%= numberOfClass %>
                     </h5>
-                    <p class="mb-0 dark:text-white dark:opacity-60">Môn Học</p>
+                    <p class="mb-0 dark:text-white dark:opacity-60">Lớp</p>
                   </div>
                 </div>
                 <div class="px-3 text-right basis-1/3">
                   <div
                     class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-orange-500 to-yellow-500">
-                    <i class="ni ni-books text-lg relative top-3.5 text-white"></i>
+                    <i class="ni ni-books text-lg relative top-3.5 text-white"></i> <!-- Thay đổi icon tại đây -->
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
+
       </div>
       <div class="flex flex-wrap mt-6 -mx-3">
         <!-- so hoc phan -->
         <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
           <div
             class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border border-t-4 border-orange">
-            <div class="flex-auto p-4">
+            <a href="./courses" class="flex-auto p-4 no-underline">
               <div class="flex flex-row -mx-3">
                 <div class="flex-none w-2/3 max-w-full px-3">
                   <div>
@@ -431,17 +434,18 @@
                 <div class="px-3 text-right basis-1/3">
                   <div
                     class="inline-block w-12 h-12 text-center rounded-circle bg-gradient-to-tl from-orange-500 to-yellow-500">
-                    <i class="ni ni-badge text-lg relative top-3.5 text-white"></i>
+                    <i class="ni ni-books text-lg relative top-3.5 text-white"></i> <!-- Thay đổi icon tại đây -->
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
+        <!-- so lop thi -->
         <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
           <div
             class="relative flex flex-col min-w-0 break-words bg-white shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border border-t-4 border-orange">
-            <div class="flex-auto p-4">
+            <a href="./classExams" class="flex-auto p-4 no-underline">
               <div class="flex flex-row -mx-3">
                 <div class="flex-none w-2/3 max-w-full px-3">
                   <div>
@@ -462,7 +466,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>

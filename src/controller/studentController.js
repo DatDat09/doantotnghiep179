@@ -11,9 +11,18 @@ const classExam = require("../models/classExam")
 
 module.exports = {
     getMainStudent: async (req, res) => {
-        res.render('build/student/index2.ejs', {
-            user: req.user
-        });
+        try {
+            const userId = req.user.id;
+            const studentClasses = await Class.find({ idStudents: userId });
+
+            res.render('build/student/index2.ejs', {
+                user: req.user,
+                classes: studentClasses
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Lỗi máy chủ');
+        }
     },
     getCourseStudent: async (req, res) => {
         try {
@@ -120,29 +129,66 @@ module.exports = {
     putClassStudent: async (req, res) => {
         try {
             const classId = req.body.classId;
-            const userId = req.user.id; // Assuming the token payload contains the user ID
-            // console.log("userId: ",userId)
+            const userId = req.user.id;
 
             const classDoc = await Class.findById(classId);
             if (!classDoc) {
                 return res.status(404).json({ message: 'Class not found' });
             }
 
-            // Check if the user is already registered
             if (classDoc.idStudents.includes(userId)) {
-                return res.status(400).json({ message: 'User already registered in this class' });
+                return res.status(400).json({ message: 'Bạn đã có trong lớp này!!' });
             }
 
-            // Add the user to the idStudents array
             classDoc.idStudents.push(userId);
             await classDoc.save();
 
-            res.status(200).json({ message: 'User registered successfully' });
+            // Lấy danh sách lớp cập nhật cho sinh viên
+            // const studentClasses = await Class.find({ idStudents: userId });
+
+            // Chuyển hướng đến trang thời khóa biểu đã cập nhật
+            res.status(200).json({ message: 'Đăng kí thành công', class: classDoc }); // Điều hướng đến route hiển thị thời khóa biểu
         } catch (error) {
             console.error('Error registering user:', error);
             res.status(500).json({ message: 'Failed to register user' });
         }
     },
+    deleteClassStudent: async (req, res) => {
+        try {
+            const classId = req.params.classId;
+            const userId = req.user.id; // Assuming the token payload contains the user ID
+
+            const classDoc = await Class.findById(classId);
+            if (!classDoc) {
+                return res.status(404).json({ message: 'Class not found' });
+            }
+
+            // Kiểm tra nếu sinh viên đã đăng ký lớp này
+            if (!classDoc.idStudents.includes(userId)) {
+                return res.status(400).json({ message: 'User not registered in this class' });
+            }
+
+            // Xóa sinh viên khỏi mảng idStudents
+            classDoc.idStudents = classDoc.idStudents.filter(id => id.toString() !== userId);
+            await classDoc.save();
+
+            res.status(200).json({ message: 'Class unregistered successfully' });
+        } catch (error) {
+            console.error('Error unregistering class:', error);
+            res.status(500).json({ message: 'Failed to unregister class' });
+        }
+    },
+    // getStudentSchedule: async (req, res) => {
+    //     try {
+    //         const userId = req.user.id;
+    //         const studentClasses = await Class.find({ idStudents: userId }).sort({ thu: 1, startTime: 1 });
+
+    //         res.render('build/student/schedule2.ejs', { classes: studentClasses });
+    //     } catch (error) {
+    //         console.error("Error fetching student schedule:", error);
+    //         res.status(500).send("Internal Server Error");
+    //     }
+    // },
     getClassExamsS: async (req, res) => {
         try {
             let results = await ClassExam.find({})
@@ -243,6 +289,17 @@ module.exports = {
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    },
+    getScheduleS: async (req, res) => {
+        try {
+            const userId = req.user.id;
+            const studentClasses = await Class.find({ idStudents: userId }).sort({ thu: 1, startTime: 1 });
+
+            res.render('build/student/schedule2.ejs', { classes: studentClasses });
+        } catch (error) {
+            console.error("Error fetching student schedule:", error);
+            res.status(500).send("Internal Server Error");
         }
     },
 }

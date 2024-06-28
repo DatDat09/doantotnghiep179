@@ -449,7 +449,7 @@
                                                         </button>
                                                         <button type="button"
                                                             class="ml-1 px-1 py-1 bg-blue-500 rounded-1.4 hover:-translate-y-px active:opacity-85 hover:shadow-md"
-                                                            onclick="showDialog_edit( '<%= classExams.classId.malop %>', '<%= classExams._id %>', '<%= classExams.classId.name %>', ' <%= classExams.teacherId.name %>', '<%= classExams.ngayThi %>', '<%= classExams.kipThi %>', '<%= classExams.phongThi %>', '<%= classExams.idStudentsDiemDanh.length %>'/'<%= classExams.idStudents.length %>', '<%= classExams._id %>')">
+                                                            onclick="showDialog_edit('<%= classExams.classId.name %>', ' <%= classExams.teacherId.name %>', '<%= classExams.ngayThi %>', '<%= classExams.kipThi %>', '<%= classExams.phongThi %>', '<%= classExams._id %>')">
                                                             <img src="../img/ic/ic_edit.svg" class="w-4 h-4" alt="Icon">
                                                         </button>
                                                         <button type="button"
@@ -542,19 +542,17 @@
 
     <!-- -->
 
-    <div id="dialog_edit" class="fixed left-0 top-0 w-full h-full flex justify-center items-center
-            hidden z-50">
-        <div class="w-full h-full bg-gray-200 opacity-80 absolute transition-transform duration-500">
-
-        </div>
+    <div id="dialog_edit" class="fixed left-0 top-0 w-full h-full flex justify-center items-center hidden z-50">
+        <div class="w-full h-full bg-gray-200 opacity-80 absolute transition-transform duration-500"></div>
         <div class="bg-white shadow-md p-8 w-8/12 h-0.9 z-50 overflow-y-auto">
 
             <div class="flex items-center justify-between md:p-5 rounded-t dark:border-gray-600">
                 <h4 class="text-slate-800 text-center mt-2 ml-2 flex-grow">
                     Thông tin lớp thi
                 </h4>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center
-                dark:hover:bg-gray-600 dark:hover:text-white mr-2" onclick="hideDialog_edit()">
+                <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white mr-2"
+                    onclick="hideDialog_edit()">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -570,43 +568,33 @@
                 <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
                     <div class="mb-4">
                         <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                            Mã lớp học</label>
-                        <input name="malop" value=""
-                            class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                    </div>
-                </div>
-                <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
-                    <div class="mb-4">
-                        <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                            Mã lớp thi</label>
-                        <input name="_id" value="" type="text" readonly
-                            class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                    </div>
-                </div>
-                <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
-                    <div class="mb-4">
-                        <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                            Tên lớp học</label>
-                        <input name="name" value="" type="text"
-                            class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
-                    </div>
-                </div>
-                <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
-                    <div class="mb-4">
-                        <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
-                            Giám thi coi thi</label>
-                        <input name="teacherIdName" value="" type="text"
+                            Tên lớp học
+                        </label>
+                        <select name="classId" id="classList"
                             class="shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                </div>
+                <div class="w-full max-w-full px-3 shrink-0 md:w-6/12 md:flex-0">
+                    <div class="mb-4">
+                        <label class="inline-block ml-1 font-bold text-sm text-slate-800 dark:text-white/80">
+                            Giám thị coi thi
+                        </label>
+                        <select name="teacherId" id="teacherSelect"
+                            class="shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
                     </div>
                 </div>
             </div>
 
-
             <div class="flex flex-wrap -mx-3 px-6">
-                <div class="w-full max-w-full px-3 shrink-0  md:w-1/4 md:flex-0">
+                <div class="w-full max-w-full px-3 shrink-0 md:w-1/4 md:flex-0">
                     <div class="mb-4">
                         <label class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">
-                            Ngày thi</label>
+                            Ngày thi
+                        </label>
                         <input name="ngayThi" type="text" value=""
                             class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                     </div>
@@ -614,7 +602,8 @@
                 <div class="w-full max-w-full px-3 shrink-0 md:w-1/4 md:flex-0">
                     <div class="mb-4">
                         <label class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">
-                            Kíp thi</label>
+                            Kíp thi
+                        </label>
                         <input name="kipThi" type="text" value=""
                             class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                     </div>
@@ -622,7 +611,8 @@
                 <div class="w-full max-w-full px-3 shrink-0 md:w-1/4 md:flex-0">
                     <div class="mb-4">
                         <label class="inline-block mb-2 ml-1 font-bold text-xs text-slate-700 dark:text-white/80">
-                            Phòng thi</label>
+                            Phòng thi
+                        </label>
                         <input name="phongThi" type="text" value=""
                             class="focus:shadow-primary-outline dark:bg-slate-850 dark:text-white text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:outline-none">
                     </div>
@@ -631,201 +621,188 @@
 
             <input name="id" type="hidden" value="">
             <button id="button_edit"
-                class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">
+                class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right hidden">
                 Thay đổi
             </button>
-            <script>
-                document.getElementById('button_edit').addEventListener('click', async function () {
-                    const id = document.querySelector("#dialog_edit input[name='id']").value;
-                    const newmalop = document.querySelector("#dialog_edit input[name='malop']").value;
-                    const new_id = document.querySelector("#dialog_edit input[name='_id']").value;
-                    const newName = document.querySelector("#dialog_edit input[name='name']").value;
-                    const newteacherIdName = document.querySelector("#dialog_edit input[name='teacherIdName']").value;
-                    const newngayThi = document.querySelector("#dialog_edit input[name='ngayThi']").value;
-                    const newkipThi = document.querySelector("#dialog_edit input[name='kipThi']").value;
-                    const newphongThi = document.querySelector("#dialog_edit input[name='phongThi']").value;
-
-                    try {
-                        // Gửi yêu cầu cập nhật dữ liệu đến máy chủ
-                        const response = await fetch(`/classExams/${id}`, {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                malop: newmalop,
-                                _id: new_id,
-                                name: newName,
-                                teacherIdName: newteacherIdName,
-                                ngayThi: newngayThi,
-                                kipThi: newkipThi,
-                                phongThi: newphongThi
-
-                            })
-                        });
-
-                        if (response.ok) {
-                            // Nếu cập nhật thành công, làm gì đó (ví dụ: ẩn hộp thoại)
-                            hideDialog_edit();
-                            // Refresh lại trang hoặc làm gì đó để cập nhật dữ liệu hiển thị
-                            window.location.reload();
-                        } else {
-                            // Xử lý khi không cập nhật được dữ liệu
-                            console.error('Failed to update data');
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                    }
-                });
-            </script>
             <button id="button_add"
                 class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">
                 Thêm mới
             </button>
-            <div id="dialog_edit" class="hidden">
 
-                <input type="text" name="malop">
-                <input type="text" name="_id">
-                <input type="text" name="name">
-                <input type="text" name="teacherIdName">
-                <input type="text" name="ngayThi">
-                <input type="text" name="kipThi">
-                <input type="text" name="phongThi">
-
-                <input type="hidden" name="id">
-                <button id="button_edit" class="hidden">Chỉnh sửa</button>
-
-            </div>
         </div>
     </div>
+
     <script>
-        let isAddButtonEventBound = false;
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('/allTeachers')
+                .then(response => response.json())
+                .then(data => {
+                    const teacherSelect = document.getElementById('teacherSelect');
+                    const teacherSelectDialog = document.getElementById('teacherSelectDialog');
+                    data.forEach(teacher => {
+                        const option = document.createElement('option');
+                        option.value = teacher._id;
+                        option.textContent = teacher.name;
+                        teacherSelect.appendChild(option);
 
-        function showDialog_edit(malop, _id, name, teacherIdName, ngayThi, kipThi, phongThi, id) {
+                        const optionDialog = document.createElement('option');
+                        optionDialog.value = teacher._id;
+                        optionDialog.textContent = teacher.name;
+                        teacherSelectDialog.appendChild(optionDialog);
+                    });
+                })
+                .catch(error => console.error('Error fetching teachers:', error));
 
+            fetch('/allClasses')
+                .then(response => response.json())
+                .then(data => {
+                    const classList = document.getElementById('classList');
+                    data.forEach(classItem => {
+                        const option = document.createElement('option');
+                        option.value = classItem._id;
+                        option.textContent = classItem.name;
+                        classList.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching classes:', error));
+        });
+
+        // Function to show edit dialog with data
+        function showDialog_edit(classId, teacherId, ngayThi, kipThi, phongThi, id) {
             let dialog = document.getElementById("dialog_edit");
             dialog.classList.remove('hidden');
 
-            // Get the input elements in the dialog
-
-            let malopInput = document.querySelector("#dialog_edit input[name='malop']");
-            let _idInput = document.querySelector("#dialog_edit input[name='_id']");
-            let nameInput = document.querySelector("#dialog_edit input[name='name']");
-            let teacherIdNameInput = document.querySelector("#dialog_edit input[name='teacherIdName']");
+            // Populate modal fields with current data
+            let classIdInput = document.querySelector("#dialog_edit select[name='classId']");
+            let teacherIdInput = document.querySelector("#dialog_edit select[name='teacherId']");
             let ngayThiInput = document.querySelector("#dialog_edit input[name='ngayThi']");
             let kipThiInput = document.querySelector("#dialog_edit input[name='kipThi']");
             let phongThiInput = document.querySelector("#dialog_edit input[name='phongThi']");
-
             let idInput = document.querySelector("#dialog_edit input[name='id']");
 
-
-            // Fill in the input fields with data
-
-            malopInput.value = malop;
-            _idInput.value = _id;
-            nameInput.value = name;
-            teacherIdNameInput.value = teacherIdName;
+            classIdInput.value = classId;
+            teacherIdInput.value = teacherId;
             ngayThiInput.value = ngayThi;
             kipThiInput.value = kipThi;
             phongThiInput.value = phongThi;
-
             idInput.value = id;
 
-
-            // Display the edit button and hide the add button
+            // Show the dialog
             document.getElementById("button_edit").classList.remove('hidden');
             document.getElementById("button_add").classList.add('hidden');
         }
 
+        // Function to hide the edit dialog
         function hideDialog_edit() {
             let dialog = document.getElementById("dialog_edit");
             dialog.classList.add('hidden');
         }
 
-        ////////////////////////////////////////////////////
-
+        // Function to show add dialog
         function showDialog_add() {
             let dialog = document.getElementById("dialog_edit");
             dialog.classList.remove('hidden');
 
-            // Reset các giá trị input
-
-            document.querySelector("#dialog_edit input[name='malop']").value = "";
-            document.querySelector("#dialog_edit input[name='_id']").value = "";
-            document.querySelector("#dialog_edit input[name='name']").value = "";
-            document.querySelector("#dialog_edit input[name='teacherIdName']").value = "";
+            // Clear input fields
+            document.querySelector("#dialog_edit select[name='classId']").value = "";
+            document.querySelector("#dialog_edit select[name='teacherId']").value = "";
             document.querySelector("#dialog_edit input[name='ngayThi']").value = "";
             document.querySelector("#dialog_edit input[name='kipThi']").value = "";
             document.querySelector("#dialog_edit input[name='phongThi']").value = "";
-
             document.querySelector("#dialog_edit input[name='id']").value = "";
 
-            // Hiển thị nút thêm mới và ẩn nút chỉnh sửa
+            // Show add button, hide edit button
             document.getElementById("button_edit").classList.add('hidden');
             document.getElementById("button_add").classList.remove('hidden');
-
-
-            // Gán sự kiện click cho nút "Thêm mới" nếu chưa được gán
-            if (!isAddButtonEventBound) {
-                document.getElementById("button_add").addEventListener('click', addNewData);
-                isAddButtonEventBound = true;
-            }
         }
 
-
-
-
-        function addNewData() {
-
-            const newmalop = document.querySelector("#dialog_edit input[name='malop']").value;
-            const new_id = document.querySelector("#dialog_edit input[name='_id']").value;
-            const newName = document.querySelector("#dialog_edit input[name='name']").value;
-            const newteacherIdName = document.querySelector("#dialog_edit input[name='teacherIdName']").value;
-            const newngayThi = document.querySelector("#dialog_edit input[name='ngayThi']").value;
-            const newkipThi = document.querySelector("#dialog_edit input[name='kipThi']").value;
-            const newphongThi = document.querySelector("#dialog_edit input[name='phongThi']").value;
-
+        // Function to handle adding new data
+        async function addNewData() {
+            const classId = document.querySelector("#dialog_edit select[name='classId']").value;
+            const teacherId = document.querySelector("#dialog_edit select[name='teacherId']").value;
+            const ngayThi = document.querySelector("#dialog_edit input[name='ngayThi']").value;
+            const kipThi = document.querySelector("#dialog_edit input[name='kipThi']").value;
+            const phongThi = document.querySelector("#dialog_edit input[name='phongThi']").value;
 
             try {
-                // Gửi yêu cầu thêm mới dữ liệu đến máy chủ
-                const response = fetch('/classExams', {
+                const response = await fetch('/classExams', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
+                        classId,
+                        teacherId,
+                        ngayThi,
+                        kipThi,
+                        phongThi
+                    })
+                });
 
-                        malop: newmalop,
-                        _id: new_id,
-                        name: newName,
-                        teacherIdName: newteacherIdName,
-                        ngayThi: newngayThi,
-                        kipThi: newkipThi,
-                        phongThi: newphongThi
-                    })
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            // Nếu thêm mới thành công, làm gì đó (ví dụ: ẩn hộp thoại)
-                            hideDialog_edit();
-                            // Refresh lại trang hoặc làm gì đó để cập nhật dữ liệu hiển thị
-                            window.location.reload();
-                        } else {
-                            // Xử lý khi không thêm mới được dữ liệu
-                            console.error('Failed to add new data');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
+                if (response.ok) {
+                    hideDialog_edit();
+                    window.location.reload(); // Refresh the page or update UI as needed
+                } else {
+                    console.error('Failed to add new data');
+                }
             } catch (error) {
                 console.error('Error:', error);
             }
         }
+
+        // Function to handle updating existing data
+        async function updateData() {
+            const id = document.querySelector("#dialog_edit input[name='id']").value;
+            const classId = document.querySelector("#dialog_edit select[name='classId']").value;
+            const teacherId = document.querySelector("#dialog_edit select[name='teacherId']").value;
+            const ngayThi = document.querySelector("#dialog_edit input[name='ngayThi']").value;
+            const kipThi = document.querySelector("#dialog_edit input[name='kipThi']").value;
+            const phongThi = document.querySelector("#dialog_edit input[name='phongThi']").value;
+
+            try {
+                const response = await fetch(`/classExams/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        classId,
+                        teacherId,
+                        ngayThi,
+                        kipThi,
+                        phongThi
+                    })
+                });
+
+                if (response.ok) {
+                    hideDialog_edit();
+                    window.location.reload(); // Refresh the page or update UI as needed
+                } else {
+                    console.error('Failed to update data');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        // Ensure event binding for add button is done once
+        let isAddButtonEventBound = false;
+        if (!isAddButtonEventBound) {
+            document.getElementById("button_add").addEventListener('click', addNewData);
+            isAddButtonEventBound = true;
+        }
+
+        // Ensure event binding for edit button is done once
+        let isEditButtonEventBound = false;
+        if (!isEditButtonEventBound) {
+            document.getElementById("button_edit").addEventListener('click', updateData);
+            isEditButtonEventBound = true;
+        }
     </script>
 
 
-
     <div id="dialog_delete" class="fixed left-0 top-0 w-full h-full flex justify-center items-center
-            hidden z-50">
+    hidden z-50">
         <div class="w-full h-full bg-gray-200 opacity-80 absolute transition-transform duration-500">
 
         </div>
@@ -833,10 +810,10 @@
 
             <div class="flex items-center justify-between md:p-5 rounded-t dark:border-gray-600">
                 <h4 class="text-slate-800 text-center mt-2 ml-2 flex-grow">
-                    Xóa học phần
+                    Xóa lớp thi
                 </h4>
                 <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center
-                dark:hover:bg-gray-600 dark:hover:text-white mr-2" onclick="hideDialog_delete()">
+        dark:hover:bg-gray-600 dark:hover:text-white mr-2" onclick="hideDialog_delete()">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -850,11 +827,12 @@
 
             <div class="flex flex-wrap">
                 <h6 class="px-6 text-slate-800 text-sm">
-                    Bạn có chắc chắn xóa học phần này không ?
+                    Bạn có chắc chắn xóa lớp này không ?
                 </h6>
             </div>
-
-            <button class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">
+            <input name="deleteId" type="hidden" value="">
+            <button class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
+                onclick="deleteData()">
                 Xóa
             </button>
 
@@ -864,18 +842,42 @@
         </div>
     </div>
     <script>
-        function showDialog_delete() {
-            let dialog = document.getElementById("dialog_delete");
-            dialog.classList.remove('hidden')
+        function deleteData() {
+            const idClassExam = document.querySelector("#dialog_delete input[name='deleteId']").value;
+
+            try {
+                // Gửi yêu cầu xóa lớp thi đến máy chủ
+                fetch(`/classExams/${idClassExam}`, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            // Nếu xóa thành công, ẩn hộp thoại và làm mới trang hoặc cập nhật UI
+                            hideDialog_delete();
+                            window.location.reload(); // Có thể thay thế bằng cập nhật dữ liệu UI mà không cần làm mới trang
+                        } else {
+                            console.error('Không thể xóa dữ liệu');
+                        }
+                    })
+                    .catch(error => console.error('Lỗi:', error));
+            } catch (error) {
+                console.error('Lỗi:', error);
+            }
         }
+
+        function showDialog_delete(idClassExam) {
+            let dialog = document.getElementById("dialog_delete");
+            dialog.classList.remove('hidden');
+
+            // Đặt giá trị của input ẩn trong dialog để idClassExam
+            document.querySelector("#dialog_delete input[name='deleteId']").value = idClassExam;
+        }
+
         function hideDialog_delete() {
             let dialog = document.getElementById("dialog_delete");
-            dialog.classList.add('hidden')
+            dialog.classList.add('hidden');
         }
     </script>
-
-    <!-- -->
-
 
     <div fixed-plugin>
         <a fixed-plugin-button
@@ -919,7 +921,8 @@
                         class="inline-block w-full px-4 py-2.5 mb-2 ml-2 font-bold leading-normal text-center text-blue-500 capitalize align-middle transition-all bg-transparent border border-blue-500 border-solid rounded-lg cursor-pointer text-sm xl-max:cursor-not-allowed xl-max:opacity-65 xl-max:pointer-events-none xl-max:bg-gradient-to-tl xl-max:from-blue-500 xl-max:to-violet-500 xl-max:text-white xl-max:border-0 hover:-translate-y-px dark:cursor-not-allowed dark:opacity-65 dark:pointer-events-none dark:bg-gradient-to-tl dark:from-blue-500 dark:to-violet-500 dark:text-white dark:border-0 hover:shadow-xs active:opacity-85 ease-in tracking-tight-rem shadow-md bg-150 bg-x-25 bg-none hover:border-blue-500"
                         data-class="bg-white">Dark</button>
                 </div>
-                <p class="block mt-2 text-sm leading-normal dark:text-white dark:opacity-80 xl:hidden">You can change
+                <p class="block mt-2 text-sm leading-normal dark:text-white dark:opacity-80 xl:hidden">You can
+                    change
                     the
                     sidenav type just on desktop view.</p>
                 <!-- Navbar Fixed -->
@@ -945,7 +948,6 @@
             </div>
         </div>
     </div>
-
 </body>
 <!-- Modal -->
 

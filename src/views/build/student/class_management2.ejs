@@ -140,7 +140,7 @@
                 </li>
                 <li class="mt-0.5 w-full">
                     <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-                        href="/listClassStudent">
+                        href="/scheduleS">
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
                             <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-calendar-grid-58"></i>
@@ -608,19 +608,14 @@
         }
     </script>
 
-    <div id="dialog_dangky" class="fixed left-0 top-0 w-full h-full flex justify-center items-center
-hidden z-50">
-        <div class="w-full h-full bg-gray-200 opacity-80 absolute transition-transform duration-500">
-
-        </div>
+    <div id="dialog_dangky" class="fixed left-0 top-0 w-full h-full flex justify-center items-center hidden z-50">
+        <div class="w-full h-full bg-gray-200 opacity-80 absolute transition-transform duration-500"></div>
         <div class="bg-white shadow-md p-8 w-4/12 z-50 overflow-y-auto">
-
             <div class="flex items-center justify-between md:p-5 rounded-t dark:border-gray-600">
-                <h4 class="text-slate-800 text-center mt-2 ml-2 flex-grow">
-                    Đăng ký lớp học
-                </h4>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center
-    dark:hover:bg-gray-600 dark:hover:text-white mr-2" onclick="hideDialog_dangky()">
+                <h4 class="text-slate-800 text-center mt-2 ml-2 flex-grow">Đăng ký lớp học</h4>
+                <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white mr-2"
+                    onclick="hideDialog_dangky()">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -631,23 +626,14 @@ hidden z-50">
             </div>
             <hr
                 class="h-px mt-0 bg-transparent bg-gradient-to-r from-transparent via-black/40 to-transparent dark:bg-gradient-to-r dark:from-transparent dark:via-white dark:to-transparent" />
-
             <div class="flex flex-wrap">
-                <h6 class="px-6 text-slate-800 text-sm">
-                    Bạn có chắc chắn đăng ký lớp học này không ?
-                </h6>
+                <h6 class="px-6 text-slate-800 text-sm">Bạn có chắc chắn đăng ký lớp học này không ?</h6>
             </div>
-
             <button class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right"
-                onclick="registerClass()">
-                Đồng ý
-            </button>
-
-
-
-
+                onclick="registerClass()">Đồng ý</button>
         </div>
     </div>
+
     <script>
         let selectedClassId = null;
 
@@ -672,12 +658,15 @@ hidden z-50">
                         },
                         body: JSON.stringify({ classId: selectedClassId })
                     });
+                    const result = await response.json();
                     if (response.ok) {
-                        alert('Đăng ký thành công!');
+                        alert(result.message);
                         hideDialog_dangky();
                         // Optionally, refresh the page or update the UI to reflect the registration
+                        window.location.reload();
                     } else {
-                        alert('Đăng ký thất bại!');
+                        alert(result.message);
+                        window.location.reload();
                     }
                 } catch (error) {
                     console.error('Error:', error);
@@ -685,7 +674,28 @@ hidden z-50">
                 }
             }
         }
+
+        function updateSchedule(classes) {
+            const tbody = document.querySelector('table tbody');
+            tbody.innerHTML = ''; // Xóa thời khóa biểu hiện tại
+
+            classes.forEach(cls => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                <td>${cls.malop}</td>
+                <td>${cls.name}</td>
+                <td>${cls.thu}</td>
+                <td>${cls.startTime}</td>
+                <td>${cls.endTime}</td>
+                
+        `;
+
+                tbody.appendChild(row);
+            });
+        }
     </script>
+
 
 
 

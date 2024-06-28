@@ -14,7 +14,7 @@ module.exports = {
   getClassExams: async (req, res) => {
     try {
       const currentPage = parseInt(req.query.page) || 1;
-      const itemsPerPage = 1; // Thay đổi số lượng mục mỗi trang nếu cần
+      const itemsPerPage = 5; // Thay đổi số lượng mục mỗi trang nếu cần
       const searchCode = req.query.mhp || '';
       const searchName = req.query.thp || '';
 
@@ -89,21 +89,31 @@ module.exports = {
 
 
   postClassExams: async (req, res) => {
-    const newData = req.body;
+    const { classId, name, teacherId, ngayThi, kipThi, phongThi } = req.body;
+
     try {
-      const createdData = await ClassExam.create(newData);
-      res.status(201).json(createdData); // Trả về dữ liệu mới đã được thêm vào
+      const createdData = await ClassExam.create({
+        classId,
+        name,
+        teacherId,
+        ngayThi,
+        kipThi,
+        phongThi
+      });
+      res.status(201).json(createdData);
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'Internal Server Error' });
     }
-  },
+  }
+
+  ,
   putClassExams: async (req, res) => {
-    const ClassID = req.params.idClassExam;
-    console.log(ClassID)
-    const newData = req.body;
+    const ClassExamID = req.params.id;
+    const newData = req.body; // Contains updated data like classId, teacherId, ngayThi, kipThi, phongThi
+
     try {
-      const updatedData = await ClassExam.findByIdAndUpdate(ClassID, newData, { new: true });
+      const updatedData = await ClassExam.findByIdAndUpdate(ClassExamID, newData, { new: true });
       res.status(200).json(updatedData);
     } catch (err) {
       console.error(err);
@@ -111,17 +121,17 @@ module.exports = {
     }
   },
   deleteClassExams: async (req, res) => {
-    const ClassID = req.params.idClassExam;
-
+    const ClassExamID = req.params.idClassExam;
     try {
-      // Xóa dữ liệu từ cơ sở dữ liệu dựa trên _id
-      await ClassExam.findByIdAndDelete(ClassID);
-      res.status(204).end(); // Trả về mã trạng thái 204 (No Content) khi xóa thành công
+      // Attempt to delete the ClassExam document
+      await ClassExam.findByIdAndDelete(ClassExamID);
+      res.status(204).end(); // Respond with 204 No Content on successful deletion
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'Internal Server Error' });
     }
   },
+
   searchStudentsExam: async (req, res) => {
     try {
       const { idClassExam } = req.params;
@@ -265,6 +275,23 @@ module.exports = {
       console.error(err);
       res.status(500).json({ message: 'Internal Server Error' });
     }
+  },
+  getAllTeachers: async (req, res) => {
+    try {
+      const teachers = await User.find({ role: 'teacher' }).select('_id name');
+      res.status(200).json(teachers);
+    } catch (error) {
+      console.error('Error fetching teachers:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  },
+  getAllClasses: async (req, res) => {
+    try {
+      const classes = await Class.find({}, 'name _id');
+      res.status(200).json(classes);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal Server Error");
+    }
   }
-
 }

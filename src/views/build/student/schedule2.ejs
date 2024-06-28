@@ -23,7 +23,6 @@
             border-radius: 10px;
             position: relative;
             padding-bottom: 50px;
-            /* Add padding to avoid overlap with the button */
         }
 
         h1 {
@@ -86,6 +85,34 @@
         .back-button i {
             margin-right: 8px;
         }
+
+        .delete-button {
+            background-color: transparent;
+            color: rgb(94 114 228);
+            font-weight: bold;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .delete-button:hover {
+            background-color: #cc1f1a;
+            color: white;
+        }
+
+        .delete-button:focus {
+            outline: none;
+        }
+
+        .delete-button i {
+            font-size: 18px;
+            margin-right: 8px;
+        }
     </style>
 </head>
 
@@ -100,7 +127,7 @@
                     <th>Ngày</th>
                     <th>Giờ bắt đầu</th>
                     <th>Giờ kết thúc</th>
-
+                    <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -121,7 +148,10 @@
                         <td>
                             <%= cls.endTime %>
                         </td>
-
+                        <td>
+                            <button onclick="deleteClass('<%= cls._id %>')" class="delete-button"><i
+                                    class="fas fa-trash-alt"></i></button>
+                        </td>
                     </tr>
                     <% }) %>
             </tbody>
@@ -131,6 +161,29 @@
     <script>
         function goBack() {
             window.history.back();
+        }
+        async function deleteClass(classId) {
+            if (confirm("Bạn có chắc chắn muốn xóa lớp học này không?")) {
+                try {
+                    const response = await fetch(`/classStudentRegister/${classId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    const result = await response.json();
+                    if (response.ok) {
+
+                        window.location.reload();
+                    } else {
+
+                        window.location.reload();
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Xóa thất bại!');
+                }
+            }
         }
     </script>
 </body>

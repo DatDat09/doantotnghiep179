@@ -777,41 +777,43 @@ hidden z-50">
                     const newstartTime = document.querySelector("#dialog_edit input[name='startTime']").value;
                     const newendTime = document.querySelector("#dialog_edit input[name='endTime']").value;
                     const newthu = document.querySelector("#dialog_edit input[name='thu']").value;
-                    const newidCourse = document.querySelector("#dialog_edit input[name='idCourse']").value;
+                    const newidCourse = document.querySelector("#dialog_edit input[name='idCourse']").value.trim();
+
+                    const data = {
+                        name: newName,
+                        malop: newmalop,
+                        phongHoc: newphongHoc,
+                        soluong: newsoluong,
+                        maxStudent: newmaxStudent,
+                        startTime: newstartTime,
+                        endTime: newendTime,
+                        thu: newthu
+                    };
+
+                    if (newidCourse) {
+                        data.idCourse = newidCourse;
+                    }
 
                     try {
-                        // Gửi yêu cầu cập nhật dữ liệu đến máy chủ
                         const response = await fetch(`/class/${id}`, {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({
-                                name: newName,
-                                malop: newmalop,
-                                phongHoc: newphongHoc,
-                                soluong: newsoluong,
-                                maxStudent: newmaxStudent,
-                                startTime: newstartTime,
-                                endTime: newendTime,
-                                thu: newthu,
-                                idCourse: newidCourse
-                            })
+                            body: JSON.stringify(data)
                         });
 
                         if (response.ok) {
-                            // Nếu cập nhật thành công, làm gì đó (ví dụ: ẩn hộp thoại)
                             hideDialog_edit();
-                            // Refresh lại trang hoặc làm gì đó để cập nhật dữ liệu hiển thị
                             window.location.reload();
                         } else {
-                            // Xử lý khi không cập nhật được dữ liệu
                             console.error('Failed to update data');
                         }
                     } catch (error) {
                         console.error('Error:', error);
                     }
                 });
+
             </script>
             <button id="button_add"
                 class="m-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded float-right">
@@ -970,10 +972,6 @@ hidden z-50">
                 console.error('Error:', error);
             }
         }
-
-
-
-
     </script>
 
 

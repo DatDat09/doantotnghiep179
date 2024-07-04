@@ -645,10 +645,10 @@
                         option.textContent = teacher.name;
                         teacherSelect.appendChild(option);
 
-                        const optionDialog = document.createElement('option');
-                        optionDialog.value = teacher._id;
-                        optionDialog.textContent = teacher.name;
-                        teacherSelectDialog.appendChild(optionDialog);
+                        // const optionDialog = document.createElement('option');
+                        // optionDialog.value = teacher._id;
+                        // optionDialog.textContent = teacher.name;
+                        // teacherSelectDialog.appendChild(optionDialog);
                     });
                 })
                 .catch(error => console.error('Error fetching teachers:', error));
